@@ -2,29 +2,9 @@
     <h2 class="form-titulo">Regístrate</h2>
     <p class="form-texto">¿Ya tienes una cuenta? <a href="./login" class="form-link">Inicia Sesión</a></p>
     <div class="form-contenedor">
-        <!--ToDo esto debe ser una molecula-->
         <%- include('../molecules/form-field', {etiqueta: 'Nombre Completo', tipo: 'text', id: 'nombre'})%>
-        <!-- <div class="form-grupo">
-            <input type="text" id="nombre" class="form-input" placeholder=" ">
-            <label for="nombre" class="form-label">nombre</label>
-            <span class="form-line"></span>
-        </div> -->
-        <!--ToDo esto debe ser una molecula-->
         <%- include('../molecules/form-field', {etiqueta: 'Correo Electronico', tipo: 'email', id: 'usuario'})%>
-        <!-- <div class="form-grupo">
-            <input type="email" id="usuario" class="form-input" placeholder=" ">
-            <label for="ususario" class="form-label">Correo Electrónico</label>
-            <span class="form-line"></span>
-        </div> -->
-        <!--ToDo esto debe ser una molecula-->
         <%- include('../molecules/form-field', {etiqueta: 'Contraseña', tipo: 'password', id: 'contraseña'})%>
-        <!-- <div class="form-grupo">
-            <input type="password" id="contraseña" class="form-input" placeholder=" ">
-            <label for="constraseña" class="form-label">Contraseña</label>
-            <span class="form-line"></span> 
-        </div>-->
-        <!--ToDo esto debe ser un atomo-->
         <%- include('../atoms/form-button', {clase: 'form-submit', texto: 'Registrarse'})%>
-        <!-- <input type="submit" class="form-submit" value="Siguiente"> -->
     </div>
 </form>
