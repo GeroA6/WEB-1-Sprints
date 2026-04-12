@@ -1,55 +1,94 @@
-// 1. Importamos Express para crear el servidor y Path para gestionar rutas de archivos
-const express = require('express');
-const path = require('path');
+// ========================================================================
+// 1. IMPORTACIÓN DE HERRAMIENTAS (DEPENDENCIAS)
+// ========================================================================
 
-// 2. Creamos la instancia de la aplicación Express
-const app = express();
+// Importamos el framework Express, que nos facilita la creación y manejo del servidor web.
+const express = require('express'); 
 
-// 3. Definimos el puerto donde escuchará el servidor (común en desarrollo local)
-const port = 3000;
+// Importamos el módulo 'path' (nativo de Node.js) para manejar las rutas de las carpetas 
+// de forma segura, sin importar si usamos Windows, Mac o Linux.
+const path = require('path'); 
 
-// 4. Configuramos el motor de plantillas
-// 'views' le dice a Express dónde están los archivos .ejs (usamos ruta absoluta con path.join)
-app.set("views", path.join(__dirname, "views"));
-// 'view engine' establece EJS como nuestra herramienta para generar el HTML dinámico
-app.set("view engine", "ejs");
+// ========================================================================
+// 2. INICIALIZACIÓN Y CONFIGURACIÓN BÁSICA
+// ========================================================================
 
-// 5. Configuramos la carpeta de archivos estáticos (CSS, imágenes, JS del cliente)
-// Al usar path.join(__dirname, "public"), el servidor siempre encontrará tus estilos
-app.use(express.static(path.join(__dirname, "public")));
+// Ejecutamos Express y guardamos toda su funcionalidad en la variable 'app'. 
+// A partir de ahora, 'app' es nuestro servidor.
+const app = express(); 
 
-// 6. Definimos la ruta raíz (cuando alguien entra a http://localhost:3000/)
+// Definimos en qué "canal" (puerto) de nuestra red local va a escuchar el servidor.
+// El 3000 es el estándar más usado para desarrollo.
+const port = 3000; 
+
+// ========================================================================
+// 3. CONFIGURACIÓN DEL MOTOR DE VISTAS (RENDERIZADO)
+// ========================================================================
+
+// Le indicamos a Express la ubicación exacta de la carpeta donde guardamos nuestras pantallas.
+// '__dirname' obtiene la ruta actual del proyecto automáticamente.
+app.set("views", path.join(__dirname, "views")); 
+
+// Le decimos a Express que el "traductor" que usaremos para convertir nuestro código a HTML es EJS.
+app.set("view engine", "ejs"); 
+
+// ========================================================================
+// 4. CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS
+// ========================================================================
+
+// Definimos la carpeta 'public' como de acceso público. Esto permite que el navegador 
+// pueda pedir el archivo styles.css o las imágenes de forma directa, sin que tengamos 
+// que programar una ruta especial para cada archivo.
+app.use(express.static(path.join(__dirname, "public"))); 
+
+// ========================================================================
+// 5. ENRUTAMIENTO (ENDPOINTS) - ¿Qué pasa cuando el usuario entra a una URL?
+// ========================================================================
+
+// Ruta raíz: Cuando el usuario entra a http://localhost:3000/
 app.get('/', (req, res) => {
-    // res.render busca en la carpeta 'views' el archivo 'pages/index.ejs' y lo envía al navegador
+    // Respondemos (res) renderizando el archivo 'pages/index.ejs'.
+    // Además, le inyectamos una variable dinámica {isAuthPage: false} para que el header sepa cómo mostrarse.
     res.render("pages/index", {isAuthPage: false});
 });
 
+// Ruta del carrito: Cuando el usuario entra a http://localhost:3000/cart
 app.get('/cart', (req, res) => {
     res.render("pages/cart", {isAuthPage: true});
 });
 
+// Ruta de pago: Cuando el usuario entra a http://localhost:3000/checkout
 app.get('/checkout', (req, res) => {
     res.render("pages/checkout", {isAuthPage: false});
 });
 
+// Ruta de inicio de sesión: Cuando el usuario entra a http://localhost:3000/login
 app.get('/login', (req, res) => {
     res.render("pages/login", {isAuthPage: true});
 })
 
+// Ruta de detalle de producto: Cuando el usuario entra a http://localhost:3000/product
 app.get('/product', (req, res) => {
     res.render("pages/product", {isAuthPage: false});
 });
 
+// Ruta de perfil de usuario: Cuando el usuario entra a http://localhost:3000/profile
 app.get('/profile', (req, res) => {
     res.render("pages/profile", {isAuthPage: true});
 });
 
+// Ruta de registro: Cuando el usuario entra a http://localhost:3000/register
 app.get('/register', (req, res) => {
     res.render("pages/register", {isAuthPage: true});
 });
 
-// 7. Arrancamos el servidor
+// ========================================================================
+// 6. ENCENDIDO DEL SERVIDOR
+// ========================================================================
+
+// Le ordenamos a nuestro servidor ('app') que se quede escuchando eternamente en el puerto 3000.
 app.listen(port, () => {
-    // Nota: Usamos comillas invertidas (backticks) `` para que ${port} imprima el número 3000
+    // Esta función se ejecuta una sola vez, justo cuando el servidor arranca con éxito,
+    // para avisarnos por la terminal que todo salió bien.
     console.log(`Servidor corriendo en el puerto: ${port}`);
 });
