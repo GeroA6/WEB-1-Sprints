@@ -363,6 +363,9 @@ main{
     background-color: #fff;
     color: #000;
 }
+.producto-titulo{
+    max-width: 6rem;
+}
 .imagen{
     width: 12rem;
     height: 12rem;

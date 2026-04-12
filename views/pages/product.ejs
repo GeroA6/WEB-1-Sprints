@@ -5,7 +5,7 @@
         <%- include('../partials/atoms/back-link', { textoVolver: 'Volver al Home', categoria: 'Productos'}) %>
         <div class="main">
             <div class="container">
-                <%- include('../partials/molecules/product-gallery')%>
+                <%- include('../partials/molecules/product-gallery', {thumb1: '/img/producto-jack.jpg', thumb2: '/img/producto-jack.jpg', thumb3: '/img/producto-jack.jpg', mainImage: '/img/producto-jack.jpg'})%>
                 <%- include('../partials/molecules/product-description', {
                     title: 'Whiskey Jack Daniels Honey 750ml',
                     puntos: '19.900',
