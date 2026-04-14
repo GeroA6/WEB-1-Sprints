@@ -48,6 +48,11 @@ app.get('/register', (req, res) => {
     res.render("pages/register", {isAuthPage: true});
 });
 
+// Captura todas las rutas no definidas
+app.use((req, res, next) => {
+    res.status(404).render('pages/404');
+});
+
 // 7. Arrancamos el servidor
 app.listen(port, () => {
     // Nota: Usamos comillas invertidas (backticks) `` para que ${port} imprima el número 3000
