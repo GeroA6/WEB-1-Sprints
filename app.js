@@ -82,11 +82,12 @@ app.get('/register', (req, res) => {
     res.render("pages/register", {isAuthPage: true});
 });
 
-// ========================================================================
-// 6. ENCENDIDO DEL SERVIDOR
-// ========================================================================
+// Captura todas las rutas no definidas
+app.use((req, res, next) => {
+    res.status(404).render('pages/404');
+});
 
-// Le ordenamos a nuestro servidor ('app') que se quede escuchando eternamente en el puerto 3000.
+// 7. Arrancamos el servidor
 app.listen(port, () => {
     // Esta función se ejecuta una sola vez, justo cuando el servidor arranca con éxito,
     // para avisarnos por la terminal que todo salió bien.
