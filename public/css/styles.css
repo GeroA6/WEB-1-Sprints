@@ -744,7 +744,19 @@ footer{
 }
 /* fin sección checkout */
 
-
+/* Inicio eccion error */
+.error-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem
+}
+.btn-volver{
+    color: #1ea811;
+    border: none;
+}
+/* Fin eccion error */
 
 /*Parte Responsive*/
 @media (max-width: 60rem){

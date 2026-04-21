@@ -27,7 +27,7 @@ const port = 3000;
 
 // Le indicamos a Express la ubicación exacta de la carpeta donde guardamos nuestras pantallas.
 // '__dirname' obtiene la ruta actual del proyecto automáticamente.
-app.set("views", path.join(__dirname, "views")); 
+app.set("views", path.join(__dirname, "src", "views")); 
 
 // Le decimos a Express que el "traductor" que usaremos para convertir nuestro código a HTML es EJS.
 app.set("view engine", "ejs"); 
@@ -83,10 +83,19 @@ app.get('/register', (req, res) => {
 });
 
 // Captura todas las rutas no definidas
-app.use((req, res, next) => {
-    res.status(404).render('pages/404');
+app.use((req, res, next) =>{
+    //se crear el objeto error con la etiqueta 404
+    const error = new Error('No encontrado');
+    error.status = 404;
+    next(error);
 });
 
+// Manejador de errores
+app.use((err, req, res, next) => {
+    const status = err.status || 500;
+    const message = err.message || 'Error interno del servidor';
+    res.status(status).render('pages/error', {isAuthPage: false, status: status,message: message})
+})
 // 7. Arrancamos el servidor
 app.listen(port, () => {
     // Esta función se ejecuta una sola vez, justo cuando el servidor arranca con éxito,

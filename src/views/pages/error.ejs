@@ -1,0 +1,14 @@
+<%- include('../partials/global/head') %>
+<body>
+    <%- include('../partials/organisms/header') %>
+    <main class="error-container">
+        <!-- Mostramos el código de error (ej: 404, 500) -->
+        <h1>Error <%= status %></h1>
+        
+        <!-- Mostramos el mensaje (ej: 'Página no encontrada') -->
+        <p><%= message %></p>
+        
+        <a href="/" class="btn-volver">Volver al inicio</a>
+    </main>
+    <%- include('../partials/organisms/footer') %>
+</body>
