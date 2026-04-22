@@ -8,6 +8,8 @@
         name="<%= id %>"
         class="form-input"
         placeholder=""
+        <%# Si el controlador nos envió datos viejos (oldData), los usamos para rellenar el campo. %>
+        value="<%= locals.oldData && oldData[id] ? oldData[id] : '' %>"
         required
     >
     <label for="<%= id %>" class="form-label"><%= etiqueta %></label>
