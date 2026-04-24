@@ -41,46 +41,20 @@ app.set("view engine", "ejs");
 // que programar una ruta especial para cada archivo.
 app.use(express.static(path.join(__dirname, "public"))); 
 
+// Middleware global para poder leer los datos que viajan en el `body` de un formulario.
+// Es crucial para que `req.body` funcione en tus controladores.
+app.use(express.urlencoded({ extended: false }));
+
 // ========================================================================
-// 5. ENRUTAMIENTO (ENDPOINTS) - ¿Qué pasa cuando el usuario entra a una URL?
+// 5. ENRUTAMIENTO
 // ========================================================================
 
-// Ruta raíz: Cuando el usuario entra a http://localhost:3000/
-app.get('/', (req, res) => {
-    // Respondemos (res) renderizando el archivo 'pages/index.ejs'.
-    // Además, le inyectamos una variable dinámica {isAuthPage: false} para que el header sepa cómo mostrarse.
-    res.render("pages/index", {isAuthPage: false});
-});
+// Importamos el archivo de rutas que creamos.
+const mainRoutes = require('./src/routes/mainRoutes');
 
-// Ruta del carrito: Cuando el usuario entra a http://localhost:3000/cart
-app.get('/cart', (req, res) => {
-    res.render("pages/cart", {isAuthPage: true});
-});
-
-// Ruta de pago: Cuando el usuario entra a http://localhost:3000/checkout
-app.get('/checkout', (req, res) => {
-    res.render("pages/checkout", {isAuthPage: false});
-});
-
-// Ruta de inicio de sesión: Cuando el usuario entra a http://localhost:3000/login
-app.get('/login', (req, res) => {
-    res.render("pages/login", {isAuthPage: true});
-})
-
-// Ruta de detalle de producto: Cuando el usuario entra a http://localhost:3000/product
-app.get('/product', (req, res) => {
-    res.render("pages/product", {isAuthPage: false});
-});
-
-// Ruta de perfil de usuario: Cuando el usuario entra a http://localhost:3000/profile
-app.get('/profile', (req, res) => {
-    res.render("pages/profile", {isAuthPage: true});
-});
-
-// Ruta de registro: Cuando el usuario entra a http://localhost:3000/register
-app.get('/register', (req, res) => {
-    res.render("pages/register", {isAuthPage: true});
-});
+// Le decimos a nuestra aplicación que para cualquier petición que empiece con '/',
+// debe usar las rutas definidas en `mainRoutes`.
+app.use('/', mainRoutes);
 
 // Captura todas las rutas no definidas
 app.use((req, res, next) =>{
