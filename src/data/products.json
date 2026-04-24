@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Whisky Jack Daniel's Honey 750ml",
+    "price": 19900,
+    "category": "Bebidas",
+    "description": "Un verdaderamente fabuloso licor de whisky Jack Daniels. Hecho con una mezcla de ricas especias y suave miel.",
+    "image": "producto-jack.jpg",
+    "stock": 15
+  },
+  {
+    "id": 2,
+    "name": "Coca Cola Lata 220mL Pack x8",
+    "price": 4500,
+    "category": "Bebidas",
+    "description": "Pack de 8 latas de Coca-Cola sabor original de 220ml. Ideal para compartir.",
+    "image": "producto-coca.jpg",
+    "stock": 50
+  },
+  {
+    "id": 3,
+    "name": "Combo Hamburguesa Completa",
+    "price": 5000,
+    "category": "Alimentos",
+    "description": "Deliciosa hamburguesa de carne asada con queso, lechuga, tomate y porción de papas fritas.",
+    "image": "producto-burger.jpg",
+    "stock": 20
+  },
+  {
+    "id": 4,
+    "name": "Café de Especialidad 250g",
+    "price": 3500,
+    "category": "Alimentos",
+    "description": "Café de especialidad tostado natural, origen Colombia. Notas a chocolate y caramelo.",
+    "image": "producto-cafe.jpg",
+    "stock": 0
+  },
+  {
+    "id": 5,
+    "name": "Auriculares Inalámbricos Bluetooth",
+    "price": 25000,
+    "category": "Electronica",
+    "description": "Auriculares con cancelación de ruido activa y batería de 30 horas de duración.",
+    "image": "producto-auriculares.jpg",
+    "stock": 10
+  },
+  {
+    "id": 6,
+    "name": "Remera Básica Oversize Negra",
+    "price": 8500,
+    "category": "Indumentaria",
+    "description": "Remera 100% algodón, corte oversize, cuello redondo. Ideal para uso diario.",
+    "image": "producto-remera.jpg",
+    "stock": 35
+  }
+]
