@@ -9,6 +9,13 @@ const express = require('express');
 // de forma segura, sin importar si usamos Windows, Mac o Linux.
 const path = require('path'); 
 
+// importamos el framework de manejo de sesiones
+const session = require('express-session');
+
+// Importamos dotenv para cargar las variables de entorno desde el archivo .env
+import dotenv from 'dotenv';
+dotenv.config({ path: '/custom/path/to/.env' });
+
 // ========================================================================
 // 2. INICIALIZACIÓN Y CONFIGURACIÓN BÁSICA
 // ========================================================================
@@ -44,6 +51,18 @@ app.use(express.static(path.join(__dirname, "public")));
 // Middleware global para poder leer los datos que viajan en el `body` de un formulario.
 // Es crucial para que `req.body` funcione en tus controladores.
 app.use(express.urlencoded({ extended: false }));
+
+// ========================================================================
+// CONFIGURACIÓN DE SESIONES
+// ========================================================================
+
+app.use(session({
+    secret: process.env.secret, //frase secreta para firmar la cookie
+    resave: false, //no guardar la sesión si no ha cambiado
+    saveUninitialized: false, //no guardar una sesión vacía
+    cookie: { secure: false} //en desarrollo, no usamos HTTPS, así que secure es false. En producción, debería ser true.
+
+}));
 
 // ========================================================================
 // 5. ENRUTAMIENTO
