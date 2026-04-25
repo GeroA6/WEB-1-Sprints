@@ -64,6 +64,9 @@ app.use(session({
 
 }));
 
+const userSessionMiddleware = require(/src/middlewares/userSessionMiddleware);
+app.use(userSessionMiddleware);
+
 // ========================================================================
 // 5. ENRUTAMIENTO
 // ========================================================================
