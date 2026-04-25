@@ -9,6 +9,7 @@ const express = require('express');
 // de forma segura, sin importar si usamos Windows, Mac o Linux.
 const path = require('path'); 
 
+
 // ========================================================================
 // 2. INICIALIZACIÓN Y CONFIGURACIÓN BÁSICA
 // ========================================================================
