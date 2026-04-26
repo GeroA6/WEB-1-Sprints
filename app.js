@@ -13,7 +13,7 @@ const path = require('path');
 const session = require('express-session');
 
 // Importamos dotenv para cargar las variables de entorno desde el archivo .env
-import dotenv from 'dotenv';
+require('dotenv').config();
 dotenv.config({ path: '/custom/path/to/.env' });
 
 // ========================================================================
@@ -77,6 +77,10 @@ const mainRoutes = require('./src/routes/mainRoutes');
 // Le decimos a nuestra aplicación que para cualquier petición que empiece con '/',
 // debe usar las rutas definidas en `mainRoutes`.
 app.use('/', mainRoutes);
+
+// Importamos las rutas del carrito y las usamos para cualquier URL que empiece con '/cart'
+const cartRoutes = require('./src/routes/cartRoutes');
+app.use('/cart', cartRoutes);
 
 // Captura todas las rutas no definidas
 app.use((req, res, next) =>{

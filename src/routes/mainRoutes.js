@@ -10,7 +10,7 @@ const { check, body } = require('express-validator');
 // --- DEFINICIÓN DE RUTAS GET ---
 // Para cada ruta, especificamos el método del controlador que debe manejarla.
 router.get('/', mainController.getHome);
-router.get('/cart', mainController.getCart);
+// router.get('/cart', mainController.getCart);
 router.get('/checkout', mainController.getCheckout);
 router.get('/login', mainController.getLogin);
 router.get('/product', mainController.getProduct);
