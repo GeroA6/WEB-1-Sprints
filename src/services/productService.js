@@ -45,6 +45,9 @@ const productsService = {
             product.name.toLowerCase().includes(lowerQuery)
         );
     }
+
+    
+
 };
 
 // exportamos el servicio para que el resto del proyecto pueda usarlo
