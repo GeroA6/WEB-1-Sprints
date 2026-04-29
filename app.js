@@ -14,7 +14,6 @@ const session = require('express-session');
 
 // Importamos dotenv para cargar las variables de entorno desde el archivo .env
 require('dotenv').config();
-dotenv.config({ path: '/custom/path/to/.env' });
 
 // ========================================================================
 // 2. INICIALIZACIÓN Y CONFIGURACIÓN BÁSICA
@@ -64,7 +63,7 @@ app.use(session({
 
 }));
 
-const userSessionMiddleware = require(/src/middlewares/userSessionMiddleware);
+const userSessionMiddleware = require('./src/middlewares/userSessionMiddleware');
 app.use(userSessionMiddleware);
 
 // ========================================================================

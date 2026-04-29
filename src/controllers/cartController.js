@@ -1,5 +1,5 @@
 // importamos el servicio de productos para leer el JSON
-const productsService = require('../services/productsService');
+const productsService = require('../services/productService');
 
 const cartController = {
     
@@ -51,7 +51,8 @@ const cartController = {
         // Le mandamos los datos al EJS para que los muestre en la vista (controlador -> vista) 
         res.render('pages/cart', { 
             cart: cartWithDetails, 
-            total: total 
+            total: total,
+            isAuthPage: false
         });
     },
 
