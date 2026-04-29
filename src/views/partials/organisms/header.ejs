@@ -16,7 +16,9 @@
 
             <div class="box-icons">
                 <div class="icon">
-                    <a href="/cart" class="fa-solid fa-cart-shopping"></a>
+                    <a href="/cart" class="fa-solid fa-cart-shopping">
+                        <span class="cart-count"><%= typeof cartCount !== 'undefined' ? cartCount : 0 %></span>
+                    </a>
                 </div>
                 <div class="icon">    
                     <a href="/profile" class="fa-solid fa-user">
