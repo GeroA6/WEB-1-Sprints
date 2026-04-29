@@ -70,9 +70,13 @@ app.use(userSessionMiddleware);
 // 5. ENRUTAMIENTO
 // ========================================================================
 
-// Importamos el archivo de rutas que creamos.
+// Importamos los archivos de rutas que creamos.
 const mainRoutes = require('./src/routes/mainRoutes');
+const productRoutes = require('./src/routes/productRoutes');
 
+// Le decimos a la app que para cualquier petición que empiece con '/products',
+// debe usar las rutas definidas en `productRoutes`.
+app.use('/products', productRoutes);
 // Le decimos a nuestra aplicación que para cualquier petición que empiece con '/',
 // debe usar las rutas definidas en `mainRoutes`.
 app.use('/', mainRoutes);

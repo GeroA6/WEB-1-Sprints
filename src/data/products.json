@@ -14,7 +14,7 @@
     "price": 4500,
     "category": "Bebidas",
     "description": "Pack de 8 latas de Coca-Cola sabor original de 220ml. Ideal para compartir.",
-    "image": "producto-coca.jpg",
+    "image": "", 
     "stock": 50
   },
   {
@@ -23,7 +23,7 @@
     "price": 5000,
     "category": "Alimentos",
     "description": "Deliciosa hamburguesa de carne asada con queso, lechuga, tomate y porción de papas fritas.",
-    "image": "producto-burger.jpg",
+    "image": "",
     "stock": 20
   },
   {
@@ -32,7 +32,7 @@
     "price": 3500,
     "category": "Alimentos",
     "description": "Café de especialidad tostado natural, origen Colombia. Notas a chocolate y caramelo.",
-    "image": "producto-cafe.jpg",
+    "image": "",
     "stock": 0
   },
   {
@@ -41,7 +41,7 @@
     "price": 25000,
     "category": "Electronica",
     "description": "Auriculares con cancelación de ruido activa y batería de 30 horas de duración.",
-    "image": "producto-auriculares.jpg",
+    "image": "",
     "stock": 10
   },
   {
@@ -50,7 +50,7 @@
     "price": 8500,
     "category": "Indumentaria",
     "description": "Remera 100% algodón, corte oversize, cuello redondo. Ideal para uso diario.",
-    "image": "producto-remera.jpg",
+    "image": "",
     "stock": 35
   }
 ]
