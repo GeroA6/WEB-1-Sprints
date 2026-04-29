@@ -9,6 +9,12 @@ const express = require('express');
 // de forma segura, sin importar si usamos Windows, Mac o Linux.
 const path = require('path'); 
 
+// importamos el framework de manejo de sesiones
+const session = require('express-session');
+
+// Importamos dotenv para cargar las variables de entorno desde el archivo .env
+require('dotenv').config();
+
 // ========================================================================
 // 2. INICIALIZACIÓN Y CONFIGURACIÓN BÁSICA
 // ========================================================================
@@ -46,6 +52,21 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 
 // ========================================================================
+// CONFIGURACIÓN DE SESIONES
+// ========================================================================
+
+app.use(session({
+    secret: process.env.secret, //frase secreta para firmar la cookie
+    resave: false, //no guardar la sesión si no ha cambiado
+    saveUninitialized: false, //no guardar una sesión vacía
+    cookie: { secure: false} //en desarrollo, no usamos HTTPS, así que secure es false. En producción, debería ser true.
+
+}));
+
+const userSessionMiddleware = require('./src/middlewares/userSessionMiddleware');
+app.use(userSessionMiddleware);
+
+// ========================================================================
 // 5. ENRUTAMIENTO
 // ========================================================================
 
@@ -55,6 +76,10 @@ const mainRoutes = require('./src/routes/mainRoutes');
 // Le decimos a nuestra aplicación que para cualquier petición que empiece con '/',
 // debe usar las rutas definidas en `mainRoutes`.
 app.use('/', mainRoutes);
+
+// Importamos las rutas del carrito y las usamos para cualquier URL que empiece con '/cart'
+const cartRoutes = require('./src/routes/cartRoutes');
+app.use('/cart', cartRoutes);
 
 // Captura todas las rutas no definidas
 app.use((req, res, next) =>{

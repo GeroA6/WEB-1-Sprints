@@ -7,9 +7,6 @@ const mainController = {
     getHome: (req, res) => {
         res.render("pages/index", { isAuthPage: false });
     },
-    getCart: (req, res) => {
-        res.render("pages/cart", { isAuthPage: true });
-    },
     getCheckout: (req, res) => {
         res.render("pages/checkout", { isAuthPage: false });
     },
