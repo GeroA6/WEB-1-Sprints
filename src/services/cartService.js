@@ -58,6 +58,38 @@ const cartService = {
     clearCart: (session) => {
         // Reiniciamos la sesión a un array vacío
         session.cart = [];
+    },
+
+    // ESCENARIO 3: Aumentar o disminuir cantidades
+    //pasamos la sesión, el id del producto y la acción (aumentar o disminuir)
+    updateQuantity: (session, productId, action) => {
+        //Inicializamos el carrito si no existe
+        cartService.initCart(session);
+        
+        // Buscamos el índice del producto en el carrito
+        const itemIndex = session.cart.findIndex(item => item.productId == productId);
+
+        // Si encontramos el producto, actualizamos la cantidad según la acción
+        if (itemIndex !== -1) {
+            if (action === 'increase') {
+                session.cart[itemIndex].quantity += 1;
+            } else if (action === 'decrease') {
+                session.cart[itemIndex].quantity -= 1;
+                
+                // Si la cantidad llega a 0, usamos splice para eliminarlo del array
+                if (session.cart[itemIndex].quantity <= 0) {
+                    session.cart.splice(itemIndex, 1);
+                }
+            }
+        }
+    },
+
+    // Quitar un producto específico del carrito (Botón "Quitar")
+    removeProduct: (session, productId) => {
+        cartService.initCart(session);
+        
+        // Filtramos el array dejando todos los productos MENOS el que queremos eliminar
+        session.cart = session.cart.filter(item => item.productId != productId);
     }
 };
 
