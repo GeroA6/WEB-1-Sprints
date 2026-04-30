@@ -15,10 +15,11 @@
                 }) %>
 
                 <%- include('../partials/molecules/product-description', {
-                    title: product.name,
-                    puntos: product.price.toLocaleString('es-AR'), /* Usamos toLocaleString para formatear el número como en el ejemplo */
-                    descripcion: product.description
-                }) %>
+                id: product.id,
+                title: product.name,          
+                puntos: product.price,        
+                descripcion: product.description 
+               }) %>
             </div>
         </div>
         <%- include('../partials/organisms/list-products')%>

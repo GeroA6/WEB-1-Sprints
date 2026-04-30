@@ -5,6 +5,7 @@ const cartController = {
     
     // ESCENARIO 1: Agregar al carrito
     addCart: (req, res) => {
+        const productId = req.params.id; // Obtenemos el id del producto desde la ruta (ej: /cart/add/2)
         // Le pasamos la sesión entera y el id al servicio para que haga la lógica
         cartService.addProduct(req.session, productId);
 
