@@ -5,7 +5,6 @@ const cartController = {
     
     // ESCENARIO 1: Agregar al carrito
     addCart: (req, res) => {
-        const productId = req.params.id; // Agarramos el ID de la URL (ej: /cart/add/2), entonces agarrara el '2'
         
         // Buscamos si ese producto ya está guardado en el carrito de la sesión
         const existingItem = req.session.cart.find(item => item.productId == productId);
@@ -13,10 +12,7 @@ const cartController = {
         if (existingItem) {
             // Si ya existe, solo le sumamos 1 a la cantidad
             existingItem.quantity += 1;
-        } else {
-            // Si no existe, lo empujamos (push) como un objeto nuevo
-            req.session.cart.push({ productId: productId, quantity: 1 });
-        }
+        const productId = req.params.id; // Obtenemos el id del producto desde la ruta (ej: /cart/add/2)
 
         // Redirigimos al usuario a la página del carrito para que vea lo que agregó
         res.redirect('/cart');

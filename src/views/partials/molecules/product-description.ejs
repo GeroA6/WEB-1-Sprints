@@ -1,6 +1,8 @@
 <div class="producto-descripcion"> 
     <h1><%= title %></h1>
-    <a href="/cart">Agregar al Carrito</a>
+    <form action="/cart/add/<%= id %>" method="POST">
+        <button type="submit" class="boton-agregar">Agregar al Carrito</button>
+    </form>
     <div class="puntos">
         <h1><%= puntos %></h1>
         <p>PUNTOS</p>
