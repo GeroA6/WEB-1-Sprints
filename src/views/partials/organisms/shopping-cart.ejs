@@ -8,23 +8,39 @@
     <h2 class="carrito-tittle">Productos en tu Carrito</h2>
     
     <div class="container-carrito">
-        <%- include('../molecules/cart-item', { 
-            imgSrc: '/img/producto-jack.jpg', 
-            title: 'Whiskey Jack Daniels Honey 750ml', 
-            price: '19.900' 
-        }) %>
-        
-        <%- include('../molecules/cart-item', { 
-            imgSrc: '/img/deyuno-clasico.jpeg', 
-            title: 'Desayuno Clásico', 
-            price: '5.000' 
-        }) %>
-        
-        <%- include('../molecules/cart-item', { 
-            imgSrc: '/img/deyuno-clasico.jpeg', 
-            title: 'Desayuno Clásico', 
-            price: '1.520' 
-        }) %>
+        <!-- Validamos si el carrito está vacío (Escenario 6) -->
+        <% if (cart.length === 0) { %>
+            <div class="carrito-vacio" style="text-align: center; padding: 2rem;">
+                <h3>Tu carrito está vacío 😕</h3>
+                <a class="boton-end" href="/" style="margin-top: 1rem; display: inline-block;">Volver al inicio</a>
+            </div>
+        <% } else { %>
+            
+            <!-- Iteramos sobre el array dinámico (Escenario 2) -->
+            <% cart.forEach(item => { %>
+                <%- include('../molecules/cart-item', { 
+                    id: item.id,
+                    imgSrc: item.image ? '/img/' + item.image : '/img/default-product.png', 
+                    title: item.name, 
+                    price: item.price,
+                    quantity: item.quantity
+                }) %>
+            <% }) %>
+            
+            <!-- Botón para vaciar todo (Escenario 4) -->
+            <form action="/cart/clear" method="POST" style="text-align: right; margin-top: 1rem;">
+                <button type="submit" class="boton-vaciar">Vaciar Carrito</button>
+            </form>
+            <div class="carrito-end">
+                <h3>Total general</h3>
+                <!-- Mostramos el total calculado en el backend (Escenario 5) -->
+                <h1>$<%= total %></h1>
+            </div>
+            <div class="carrito-end">
+                <a class="boton-end" href="/checkout">Ir a Pagar</a>
+            </div>
+            
+        <% } %>
         
         <div class="carrito-end">
             <h3>Productos en tu Carrito</h3>

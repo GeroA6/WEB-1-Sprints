@@ -4,11 +4,24 @@
         <p><%= title %></p>
     </div>
     <div class="producto-right">
-        <a href="<%= locals.removeLink || '#' %>">Quitar</a>
-        <div class="boton">
-            <button>-</button>
-            <button><%= locals.quantity || 1 %></button>
-            <button>+</button>
+        <!-- Botón Quitar -->
+        <form action="/cart/remove/<%= id %>" method="POST" style="display: inline;">
+            <button type="submit" style="background: none; border: none; font-size: inherit; cursor: pointer; text-decoration: underline;">Quitar</button>
+        </form>
+        
+        <div class="boton" style="display: flex; align-items: center;">
+            <!-- Botón ➖ -->
+            <form action="/cart/update/<%= id %>?action=decrease" method="POST" style="margin: 0;">
+                <button type="submit">-</button>
+            </form>
+            
+            <!-- Cantidad actual -->
+            <button disabled style="color: black;"><%= locals.quantity || 1 %></button>
+            
+            <!-- Botón ➕ -->
+            <form action="/cart/update/<%= id %>?action=increase" method="POST" style="margin: 0;">
+                <button type="submit">+</button>
+            </form>
         </div>
         <h1><%= price %></h1>
     </div>
