@@ -31,6 +31,26 @@ const cartController = {
         // El servicio se encarga de vaciarlo
         cartService.clearCart(req.session);
         res.redirect('/cart');
+    },
+
+    // ESCENARIO 3: Modificar cantidad (+ o -)
+    updateCart: (req, res) => {
+        const productId = req.params.id;
+        // Obtenemos la acción desde la query string (ej: /cart/update/2?action=increase)
+        const action = req.query.action; 
+
+        cartService.updateQuantity(req.session, productId, action);
+        
+        res.redirect('/cart');
+    },
+
+    // Quitar un producto específico
+    removeItem: (req, res) => {
+        const productId = req.params.id;
+
+        cartService.removeProduct(req.session, productId);
+        
+        res.redirect('/cart');
     }
 };
 
