@@ -19,7 +19,12 @@ const mainController = {
             .sort(()=> 0.5 - Math.random())
             .slice(0, 5); // Esto es solo para mostrar algo aleatorio
 
-        res.render("pages/index", { isAuthPage: false, sugeridos: sugeridos }); //array a la vista
+        const masPedidos = productsData
+            .filter(product => product.masPedidos === true) // filtramos por el flag "masPedidos" 
+            .sort(() => 0.5 - Math.random()) // lo mezclamos
+            .slice(0, 10); // Limite de 10 productos
+
+        res.render("pages/index", { isAuthPage: false, sugeridos: sugeridos, masPedidos:masPedidos }); //array a la vista
     },
     getCheckout: (req, res) => {
         res.render("pages/checkout", { isAuthPage: false });
