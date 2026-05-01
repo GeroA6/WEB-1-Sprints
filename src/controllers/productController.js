@@ -37,6 +37,25 @@ const productController = {
 
         // Renderizamos la vista pasándole los productos ya ordenados
         res.render('pages/product', { products: products });
+    },
+
+    // Método para manejar la búsqueda de productos
+    search: (req, res) => {
+        // Atrapamos la palabra desde la URL (?query=...)
+        const searchQuery = req.query.query; 
+        // Si no hay una consulta de búsqueda, simplemente renderizamos la vista sin resultados.
+        let results = [];
+
+        if (searchQuery) {
+            results = productService.searchProducts(searchQuery);
+        }
+
+        // Reutilizamos la vista de productos pasándole los resultados filtrados.
+        // Si no hay resultados (results.length === 0), la vista EJS debería mostrar el mensaje amigable.
+        res.render('pages/product', { 
+            products: results,
+            searchQuery: searchQuery 
+        });
     }
 };
 

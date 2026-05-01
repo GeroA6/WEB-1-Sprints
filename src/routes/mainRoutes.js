@@ -16,6 +16,8 @@ router.get('/login', mainController.getLogin);
 router.get('/product', mainController.getProduct);
 router.get('/profile', mainController.getProfile);
 router.get('/register', mainController.getRegister);
+// La ruta real será GET /search?query=...
+router.get('/search', mainController.getSearch);
 
 // --- DEFINICIÓN DE RUTAS POST ---
 // Esta ruta tiene 3 partes: la URL, un array de middlewares de validación, y el método del controlador.

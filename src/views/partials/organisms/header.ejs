@@ -9,10 +9,10 @@
         </a>
 
         <% if (!isAuthPage) { %>
-            <div class="header-search">
-                <input type="text" placeholder="Buscar productos...">
-                <a href="#" class="fa-solid fa-magnifying-glass"></a>
-            </div>
+            <form action="/search" method="GET" class="header-search">
+                <input type="text" name="query" placeholder="Buscar productos..." required>
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
 
             <div class="box-icons">
                 <div class="icon">
