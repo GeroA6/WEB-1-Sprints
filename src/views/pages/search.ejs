@@ -1,0 +1,29 @@
+<%- include('../partials/global/head')%>
+<body>
+    <%- include('../partials/organisms/header')%>
+    <main>
+        <%- include('../partials/organisms/nav-bar') %>
+        
+         <section class="section-productos">
+             <div class="contenedor-productos">
+                <!-- Mostramos dinámicamente qué fue lo que buscó el usuario -->
+                <h2>Resultados de búsqueda para: "<%= searchQuery %>"</h2>
+                
+                <!-- Evaluamos si el array de productos volvió vacío -->
+                <% if (products.length === 0) { %>
+                    <div style="text-align: center; padding: 3rem;">
+                        <h3>No encontramos productos que coincidan con tu búsqueda 😕</h3>
+                        <a href="/" class="boton-end" style="display: inline-block; margin-top: 1rem;">Volver al inicio</a>
+                    </div>
+                <% } else { %>
+                    <!-- Si hay resultados, reutilizamos tu parcial pasándole los productos filtrados -->
+                    <%- include('../partials/organisms/list-products', { products: products }) %>
+                <% } %>
+                
+             </div>
+         </section>
+         
+        <%- include('../partials/organisms/nav-bar') %>
+    </main>
+    <%- include('../partials/organisms/footer')%>
+</body>
