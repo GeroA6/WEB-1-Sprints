@@ -8,7 +8,7 @@
              <div class="contenedor-productos">
                 <%- include('../partials/organisms/list-products') %>
                 <h2>Te puede interesar</h2>
-                <div class="box-productos">
+                <div class="box-productos"> <!-- inyectamos el array de productos sugeridos-->
                     <% sugeridos.forEach(product => { %> <!--//iteramos sobre los productos sugeridos y mostramos -->
                     <%- include('../partials/molecules/product-card', { link: '/product/' + product.id,
                       
@@ -17,6 +17,15 @@
                       puntos: product.price
                      }) %>
                     <% }) %>
+                </div>
+                <h2> Lo más pedidos</h2>
+                <div class="box-productos"> <!--inyectamos el array de productos mas pedidos --> 
+                    <% masPedidos.forEach(product => { %>
+                      <%- include('../partials/molecules/product-card', { link: '/product/' + product.id,
+                        imgSrc: product.image ? '/img/products/' + product.image : '/img/product-defoult.jpg',
+                        title: product.name,
+                        puntos: product.price
+                       }) %> <%}) %> 
                 </div>
                 <%- include('../partials/organisms/list-products') %>
              </div>
