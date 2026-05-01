@@ -18,8 +18,20 @@ const productsService = {
     // MÉTODOS PARA LOS CONTROLLERS
 
     // funcion para obtener todos los productos
-    getAllProducts: function() {
-        return this._readJson();
+    getAllProducts: (sortQuery) =>{
+        // Hacemos una copia del array para no modificar el JSON original en memoria
+        let sortedProducts = [...products];
+
+        // Lógica de ordenamiento: si sortQuery es 'asc', ordenamos de menor a mayor; si es 'desc', de mayor a menor
+        // que sea 'asc' significa que ese string se encuentra en la query de la URL, por ejemplo: /products?sort=asc, lo mismo para 'desc'
+        if (sortQuery === 'asc') {
+            sortedProducts.sort((a, b) => a.price - b.price);
+        } else if (sortQuery === 'desc') {
+            sortedProducts.sort((a, b) => b.price - a.price);
+        }
+        
+        // Si sortQuery no es ni 'asc' ni 'desc' (o es undefined), devuelve el array normal
+        return sortedProducts;
     },
 
     // funcion para obtener un producto por su ID
