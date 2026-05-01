@@ -8,6 +8,14 @@
              <div class="contenedor-productos">
                 <%- include('../partials/organisms/list-products') %>
                 <h2>Te puede interesar</h2>
+                <div class="box-productos">
+                    <% sugeridos.forEach(producto => { %> <!--//iteramos sobre los productos sugeridos y mostramos -->
+                    <%- include('../partials/moleculas/product-card', { link: '/product/' + producto.id,
+                      title: producto.name,
+                      price: producto.price
+                     }) %>
+                    <% }) %>
+                </div>
                 <%- include('../partials/organisms/list-products') %>
              </div>
          </section>
