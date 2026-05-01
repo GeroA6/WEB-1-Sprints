@@ -25,6 +25,18 @@ const productController = {
 
         // 4. Escenario 1: Si el producto existe, renderizamos la vista de detalle.
         res.render('pages/productDetail', { product: product, isAuthPage: false });
+    },
+
+    // Método que renderiza la lista de productos
+    listProducts: (req, res) => {
+        // Atrapamos la variable 'sort' de la query string (la parte después del ? en la URL, por ejemplo: /products?sort=asc)
+        const sortQuery = req.query.sort; 
+
+        // Le pedimos al servicio los productos, pasándole el criterio de orden
+        const products = productService.getAllProducts(sortQuery);
+
+        // Renderizamos la vista pasándole los productos ya ordenados
+        res.render('pages/product', { products: products });
     }
 };
 
