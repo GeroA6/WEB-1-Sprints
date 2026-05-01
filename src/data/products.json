@@ -6,7 +6,8 @@
     "category": "Bebidas",
     "description": "Un verdaderamente fabuloso licor de whisky Jack Daniels. Hecho con una mezcla de ricas especias y suave miel.",
     "image": "producto-jack.jpg",
-    "stock": 15
+    "stock": 15,
+    "masPedido": false
   },
   {
     "id": 2,
@@ -15,7 +16,8 @@
     "category": "Bebidas",
     "description": "Pack de 8 latas de Coca-Cola sabor original de 220ml. Ideal para compartir.",
     "image": "", 
-    "stock": 50
+    "stock": 50,
+    "masPedido": true
   },
   {
     "id": 3,
@@ -24,7 +26,8 @@
     "category": "Alimentos",
     "description": "Deliciosa hamburguesa de carne asada con queso, lechuga, tomate y porción de papas fritas.",
     "image": "",
-    "stock": 20
+    "stock": 20,
+    "masPedido": true
   },
   {
     "id": 4,
@@ -33,7 +36,8 @@
     "category": "Alimentos",
     "description": "Café de especialidad tostado natural, origen Colombia. Notas a chocolate y caramelo.",
     "image": "",
-    "stock": 0
+    "stock": 0,
+    "masPedido": true
   },
   {
     "id": 5,
@@ -42,7 +46,8 @@
     "category": "Electronica",
     "description": "Auriculares con cancelación de ruido activa y batería de 30 horas de duración.",
     "image": "",
-    "stock": 10
+    "stock": 10,
+    "masPedido": false
   },
   {
     "id": 6,
@@ -51,6 +56,7 @@
     "category": "Indumentaria",
     "description": "Remera 100% algodón, corte oversize, cuello redondo. Ideal para uso diario.",
     "image": "",
-    "stock": 35
+    "stock": 35,
+    "masPedido": false
   }
 ]
