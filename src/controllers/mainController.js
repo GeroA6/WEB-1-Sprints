@@ -1,11 +1,25 @@
 // Importamos solo `validationResult` porque el controlador solo necesita LEER los resultados de la validación.
 const { validationResult } = require('express-validator');
 const productService = require('../services/productService');
+
+const fs = require('fs'); // Para leer archivos JSON
+const path = require('path'); // para construir rutas de archivos de forma
+
+
 // Creamos un objeto que contendrá toda la lógica de nuestras rutas.
 const mainController = {
     // Cada método corresponde a una acción o vista.
     getHome: (req, res) => {
-        res.render("pages/index", { isAuthPage: false });
+        // leemos el archivo JSON para mostrar los productos en la pagina de inicio
+        const productsPath = path.join(__dirname, '../data/products.json');
+        const productsData = JSON.parse(fs.readFileSync(productsPath, 'utf-8')); 
+
+        // Para mostrar productos sugeridos, mezclamos el array de productos y tomamos los primeros 5.
+        const sugeridos = productsData
+            .sort(()=> 0.5 - Math.random())
+            .slice(0, 5); // Esto es solo para mostrar algo aleatorio
+
+        res.render("pages/index", { isAuthPage: false, sugeridos: sugeridos }); //array a la vista
     },
     getCheckout: (req, res) => {
         res.render("pages/checkout", { isAuthPage: false });
@@ -62,6 +76,8 @@ const mainController = {
         console.log("¡Validación exitosa! Datos a guardar: ", req.body);
         res.redirect("/login");
     }
+
+
 };
 
 // Exportamos todo el objeto para que el router pueda usar estos métodos.
