@@ -11,6 +11,8 @@
                 <div class="box-productos">
                     <% sugeridos.forEach(producto => { %> <!--//iteramos sobre los productos sugeridos y mostramos -->
                     <%- include('../partials/moleculas/product-card', { link: '/product/' + producto.id,
+                      
+                      imgSrc: producto.image ? '/img/products/' + producto.image : '/img/producto-defoult.jpg',
                       title: producto.name,
                       price: producto.price
                      }) %>
