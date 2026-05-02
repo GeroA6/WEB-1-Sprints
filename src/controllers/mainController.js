@@ -104,7 +104,20 @@ const mainController = {
         // 3. Si no hay errores, la validación fue exitosa.
         console.log("¡Validación exitosa! Datos a guardar: ", req.body);
         res.redirect("/login");
-    }
+    },
+
+    getCategory: (req, res) => {
+        const productsData = getAllProducts();
+        const requestedCategory = req.params.category; // obtenemos la categoría de la URL
+        const productosFiltrados = productsData.filter(
+            p => p.category.toLowerCase() === requestedCategory.toLowerCase()); // filtramos los productos por categoría (ignorando mayúsculas/minúsculas)
+    
+            res.render("pages/category", {
+                isAuthPage: false, // no es una página de autenticación
+                categoriaNombre: requestedCategory, // pasa el nombre de la categoria para mostrarlo en la vista
+                productos: productosFiltrados
+            });
+        },
 
 
 };
