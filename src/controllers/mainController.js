@@ -38,18 +38,17 @@ const mainController = {
         res.render("pages/login", { isAuthPage: true });
     },
     getProduct: (req, res) => {
-        // llamamos la funcion aux para obtener los productos
-        const productsData = getAllProducts();
-
-        const productId = parseInt(req.params.id); // obtenemos el id de la URL
-        const productPrincipal = productsData.find(p => p.id === productId);
-            if (!productPrincipal){
-                return res.status(404).render("pages/404");
-            }
-
-            let relacionados = productsData.filter(p => 
-                p.category === productPrincipal.category&& //mismos productos de la misma categoria
-                 p.id !== productId
+        // llamamos la funcion aux para obtener los productos desde el JSON
+        try {
+            const productsData = getAllProducts();
+    
+            // Usamos la normalización centralizada para validar
+            const productId = productService.normalizeId(req.params.id);
+            
+            const productPrincipal = productsData.find(p => p.id === productId);
+            
+            let relacionados = productsData.filter(p => p.category &&
+                p.id !== productId
             );
 
             if (relacionados.length > 0){
@@ -59,6 +58,10 @@ const mainController = {
             }
 
         res.render("pages/product", { isAuthPage: false, product: productPrincipal, relacionados: relacionados });
+            res.render("pages/product", { isAuthPage: false, product: productPrincipal, relacionados: relacionados });
+        } catch (error) {
+            next(error);
+        }
     },
     getProfile: (req, res) => {
         res.render("pages/profile", { isAuthPage: true });
