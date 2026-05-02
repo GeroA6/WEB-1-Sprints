@@ -5,14 +5,19 @@ const productService = require('../services/productService');
 const fs = require('fs'); // Para leer archivos JSON
 const path = require('path'); // para construir rutas de archivos de forma
 
+// Funcion auxiliar para obtener los productos desde JSON. Se puede usar en cualquier metodo del controlador.
+const getAllProducts = () => {
+    const productsPath = path.join(__dirname, '../data/products.json');
+    const productsData = fs.readFileSync(productsPath, 'utf-8');
+    return JSON.parse(productsData);
+}
 
 // Creamos un objeto que contendrá toda la lógica de nuestras rutas.
 const mainController = {
     // Cada método corresponde a una acción o vista.
     getHome: (req, res) => {
-        // leemos el archivo JSON para mostrar los productos en la pagina de inicio
-        const productsPath = path.join(__dirname, '../data/products.json');
-        const productsData = JSON.parse(fs.readFileSync(productsPath, 'utf-8')); 
+        // obtener productos con la funcion aux
+        const productsData = getAllProducts();
 
         // Para mostrar productos sugeridos, mezclamos el array de productos y tomamos los primeros 5.
         const sugeridos = productsData
@@ -33,7 +38,26 @@ const mainController = {
         res.render("pages/login", { isAuthPage: true });
     },
     getProduct: (req, res) => {
-        res.render("pages/product", { isAuthPage: false });
+        // llamamos la funcion aux para obtener los productos
+        const productsData = getAllProducts();
+
+        const productId = parseInt(req.params.id); // obtenemos el id de la URL
+        const productPrincipal = productsData.find(p => p.id === productId);
+            if (!productPrincipal){
+                return res.status(404).render("pages/404");
+            }
+
+            let relacionados = productsData.filter(p => p.category &&
+                p.id !== productId
+            );
+
+            if (relacionados.length > 0){
+                relacionados = relacionados
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 4);
+            }
+
+        res.render("pages/product", { isAuthPage: false, product: productPrincipal, relacionados: relacionados });
     },
     getProfile: (req, res) => {
         res.render("pages/profile", { isAuthPage: true });
