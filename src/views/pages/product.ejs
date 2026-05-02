@@ -1,20 +1,53 @@
-<%- include('../partials/global/head')%>
-<body>
-    <%- include('../partials/organisms/header')%>
-    <main>
-        <%- include('../partials/atoms/back-link', { textoVolver: 'Volver al Home', categoria: 'Productos'}) %>
+
+<%- include('../partials/atoms/back-link', { 
+    textoVolver: 'Volver al Home', 
+    categoria: productos.category || 'Productos'
+}) %>
+
         <div class="main">
             <div class="container">
-                <%- include('../partials/molecules/product-gallery', {thumb1: '/img/producto-jack.jpg', thumb2: '/img/producto-jack.jpg', thumb3: '/img/producto-jack.jpg', mainImage: '/img/producto-jack.jpg'})%>
+                <%- include('../partials/molecules/product-gallery', {
+                    thumb1: producto.image ? '/img/' + producto.image : '/img/producto-defoult.jpg',
+                    thumb2: producto.image ? '/img/' + producto.image : '/img/producto-defoult.jpg',
+                    thumb3: producto.image ? '/img/' + producto.image : '/img/producto-defoult.jpg',
+                    mainImage: producto.image ? '/img/' + producto.image : '/img/producto-defoult.jpg'
+                })%>
+                
+                
                 <%- include('../partials/molecules/product-description', {
-                    id: 1,
-                    title: 'Whiskey Jack Daniels Honey 750ml',
-                    puntos: '19.900',
-                    descripcion: 'Un verdaderamente fabuloso licor de whisky Jack Daniels. Esta hecho con una mezcla de ricas especias y suave, miel tersa y el resultado es delicioso sobre hielo o cafe. Aroma de caramelo y roble carbonizado, un poco de flor de naranja, miel de manuka y vainilla. Boca: grueso y cremoso, con notas de vainilla, roble tostado, miel de nuevo, un poco de albaricoque tambien. Acabado: De buena longitus - redondeado y rico. No incluye vasos, la foto es solo ilustrativa.'}) %>
+                    id: producto.id,
+                    title: producto.name,
+                    puntos: producto.price,
+                    descripcion: producto.description
+                }) %>
             </div>
         </div>
+
+        <section class= "section-relacionados" style="margin-top: 2rem;">
+            <div class= "contenedor-productos">
+                <h2> Productos Relacionados</h2>
+
+                <% if (relacionados.length === 0) { %>
+                
+                    <div class="empty-state" style="text-align: center; padding: 2rem; color: #666;">
+                      <p>Por el momento no hay alternativas similares en esta categoría. ¡Sigue explorando nuestro catálogo!</p>
+                    </div>
+
+                <% } else { %>
+                    <div class="box-productos">
+                    <% relacionados.forEach(relacionado => { %>
+
+                        <%- include('../partials/molecules/product-card', {
+                            link: '/products/' + relacionado.id,
+                            imgSrc: relacionado.image ? '/img/products/' + relacionado.image : '/img/producto-defoult.jpg',
+                            title: relacionado.name,
+                            puntos: relacionado.price
+                        }) %>
+                    <% }) %>
+            </div>
+                <% } %>
+        </section>
         <%- include('../partials/organisms/list-products')%>
         <%- include('../partials/organisms/nav-bar')%>
-    </main>
-    <%- include('../partials/organisms/footer')%>
-</body>
+    
+    
