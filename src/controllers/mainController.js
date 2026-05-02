@@ -47,8 +47,9 @@ const mainController = {
                 return res.status(404).render("pages/404");
             }
 
-            let relacionados = productsData.filter(p => p.category &&
-                p.id !== productId
+            let relacionados = productsData.filter(p => 
+                p.category === productPrincipal.category&& //mismos productos de la misma categoria
+                 p.id !== productId
             );
 
             if (relacionados.length > 0){
