@@ -1,0 +1,31 @@
+<%- include('../partials/atoms/back-link', {
+    textoVolver: 'Volver a categorias',
+    categoria: '/categories'
+}) %>
+
+<div class="main">
+    <div class="container" style="padding: 2rem 0;">
+        <h1 style="text-transform: capitalize; margin-bottom: 2rem; font-size: 2rem;">
+            Categoría: <%= categoriaNombre %>
+        </h1>
+        <% if (productos.length === 0) { %>
+         <div class="empty-state" style="text-align: center; padding: 4rem 2rem; background-color: #f9f9f9; border-radius: 8px;">
+                <p style="font-size: 1.2rem; color: #666;">No encontramos productos para esta categoría por el momento. ¡Pronto subiremos novedades!</p>
+            </div>
+        <% } else { %>
+
+            <div class="box-productos">
+                <% productos.forEach(producto => { %>
+                    
+                    <%- include('../partials/molecules/product-card', {
+                        link: '/products/' + producto.id,
+                        imgSrc: producto.image ? '/img/products/' + producto.image : '/img/producto-defoult.jpg',
+                        title: producto.name,
+                        puntos: producto.price
+                    }) %>
+                    
+                <% }) %>
+            </div>
+            <% } %>
+    </div>
+</div>

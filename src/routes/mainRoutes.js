@@ -14,10 +14,13 @@ router.get('/', mainController.getHome);
 router.get('/checkout', mainController.getCheckout);
 router.get('/login', mainController.getLogin);
 router.get('/product', mainController.getProduct);
+router.get('/products/:id', mainController.getProduct); // Ruta dinámica para productos individuales
 router.get('/profile', mainController.getProfile);
 router.get('/register', mainController.getRegister);
 // La ruta real será GET /search?query=...
 router.get('/search', mainController.getSearch);
+// Ruta dinámica para categorías: GET /categories/:category
+router.get('/categories/:category', mainController.getCategory);
 
 // --- DEFINICIÓN DE RUTAS POST ---
 // Esta ruta tiene 3 partes: la URL, un array de middlewares de validación, y el método del controlador.
