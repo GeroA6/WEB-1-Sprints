@@ -21,6 +21,17 @@ const productController = {
             const error = new Error('¡Ups! Producto no encontrado.');
             error.status = 404;
             return next(error);
+        try {
+            // 1. Normalizamos y validamos el ID (Lanza 400 o 404 automáticamente si hay fallo)
+            const productId = productService.normalizeId(req.params.id);
+    
+            // 2. Obtenemos el producto (ya sabemos que existe gracias a la validación)
+            const product = productService.getProductById(productId);
+    
+            // 3. Renderizamos la vista de detalle
+            res.render('pages/productDetail', { product: product, isAuthPage: false });
+        } catch (error) {
+            next(error);
         }
 
         // 4. Escenario 1: Si el producto existe, renderizamos la vista de detalle.
