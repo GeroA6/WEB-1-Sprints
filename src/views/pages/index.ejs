@@ -10,8 +10,8 @@
                 <h2>Te puede interesar</h2>
                 <div class="box-productos"> <!-- inyectamos el array de productos sugeridos-->
                     <% sugeridos.forEach(product => { %> <!--//iteramos sobre los productos sugeridos y mostramos -->
-                    <%- include('../partials/molecules/product-card', { link: '/product/' + product.id,
-                      
+                    <%- include('../partials/molecules/product-card', {
+                      link: '/products/' + product.id,
                       imgSrc: product.image ? '/img/products/' + product.image : '/img/product-defoult.jpg',
                       title: product.name,
                       puntos: product.price
