@@ -96,8 +96,13 @@ app.use((req, res, next) =>{
 // Manejador de errores
 app.use((err, req, res, next) => {
     const status = err.status || 500;
-    const message = err.message || 'Error interno del servidor';
-    res.status(status).render('pages/error', {isAuthPage: false, status: status,message: message})
+    
+    // 1. Registramos el error completo en la terminal (solo tú lo ves)
+    console.error(`[Error ${status}]:`, err.message, err.stack);
+
+    // 2. Filtramos el mensaje para la vista: si es 500, ocultamos el error real
+    const message = status >= 500 ? 'Error interno del servidor' : err.message;
+    res.status(status).render('pages/error', {isAuthPage: false, status: status, message: message});
 })
 // 7. Arrancamos el servidor
 app.listen(port, () => {
