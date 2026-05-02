@@ -1,5 +1,7 @@
 // importamos el servicio de carrito que acabamos de crear
 const cartService = require('../services/cartService');
+// Importamos el servicio de productos para utilizar la función normalizeId
+const productService = require('../services/productService');
 
 const cartController = {
     
@@ -11,6 +13,16 @@ const cartController = {
 
         // Redirigimos al usuario a la página del carrito para que vea lo que agregó
         res.redirect('/cart');
+    addCart: (req, res, next) => {
+        try {
+            // Normalizamos y validamos el ID antes de agregarlo al carrito
+            const productId = productService.normalizeId(req.params.id);
+            
+            cartService.addProduct(req.session, productId);
+            res.redirect('/cart');
+        } catch (error) {
+            next(error);
+        }
     },
 
     // ESCENARIO 2: Ver el Carrito
@@ -43,6 +55,17 @@ const cartController = {
         cartService.updateQuantity(req.session, productId, action);
         
         res.redirect('/cart');
+    updateCart: (req, res, next) => {
+        try {
+            // Validamos el ID
+            const productId = productService.normalizeId(req.params.id);
+            const action = req.query.action; 
+    
+            cartService.updateQuantity(req.session, productId, action);
+            res.redirect('/cart');
+        } catch (error) {
+            next(error);
+        }
     },
 
     // Quitar un producto específico
@@ -52,6 +75,16 @@ const cartController = {
         cartService.removeProduct(req.session, productId);
         
         res.redirect('/cart');
+    removeItem: (req, res, next) => {
+        try {
+            // Validamos el ID
+            const productId = productService.normalizeId(req.params.id);
+    
+            cartService.removeProduct(req.session, productId);
+            res.redirect('/cart');
+        } catch (error) {
+            next(error);
+        }
     }
 };
 
