@@ -47,6 +47,15 @@ const mainController = {
                 return res.status(404).render("pages/404");
             }
 
+    getProduct: (req, res, next) => {
+        try {
+            const productsData = getAllProducts();
+    
+            // Usamos la normalización centralizada para validar
+            const productId = productService.normalizeId(req.params.id);
+            
+            const productPrincipal = productsData.find(p => p.id === productId);
+            
             let relacionados = productsData.filter(p => p.category &&
                 p.id !== productId
             );
@@ -58,6 +67,10 @@ const mainController = {
             }
 
         res.render("pages/product", { isAuthPage: false, product: productPrincipal, relacionados: relacionados });
+            res.render("pages/product", { isAuthPage: false, product: productPrincipal, relacionados: relacionados });
+        } catch (error) {
+            next(error);
+        }
     },
     getProfile: (req, res) => {
         res.render("pages/profile", { isAuthPage: true });
