@@ -17,6 +17,28 @@ const productsService = {
 
     // MÉTODOS PARA LOS CONTROLLERS
 
+    // Función para normalizar y validar IDs de productos
+    normalizeId: function(id) {
+        const parsedId = parseInt(id, 10);
+        
+        // 1. Escenario: ID no numérico -> 400
+        if (isNaN(parsedId)) {
+            const error = new Error('Formato de ID inválido. Debe ser un número.');
+            error.status = 400;
+            throw error;
+        }
+
+        // 2. Escenario: ID numérico pero inexistente -> 404
+        const product = this.getProductById(parsedId);
+        if (!product) {
+            const error = new Error('¡Ups! Producto no encontrado.');
+            error.status = 404;
+            throw error;
+        }
+
+        return parsedId;
+    },
+
     // funcion para obtener todos los productos
     getAllProducts: (sortQuery) =>{
         // Hacemos una copia del array para no modificar el JSON original en memoria
