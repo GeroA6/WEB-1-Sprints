@@ -40,7 +40,9 @@ const productsService = {
     },
 
     // funcion para obtener todos los productos
-    getAllProducts: (sortQuery) =>{
+    getAllProducts: function(sortQuery) {
+
+        const products = this._readJson();
         // Hacemos una copia del array para no modificar el JSON original en memoria
         let sortedProducts = [...products];
 
