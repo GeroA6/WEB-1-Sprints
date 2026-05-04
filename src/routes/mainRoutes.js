@@ -13,7 +13,7 @@ router.get('/', mainController.getHome);
 // router.get('/cart', mainController.getCart);
 router.get('/checkout', mainController.getCheckout);
 router.get('/login', mainController.getLogin);
-router.get('/product', mainController.getProduct);
+//router.get('/product', mainController.getProduct);
 router.get('/products/:id', mainController.getProduct); // Ruta dinámica para productos individuales
 router.get('/profile', mainController.getProfile);
 router.get('/register', mainController.getRegister);
