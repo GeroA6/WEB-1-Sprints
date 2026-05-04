@@ -13,7 +13,6 @@ const cartController = {
 
         // Redirigimos al usuario a la página del carrito para que vea lo que agregó
         res.redirect('/cart');
-    addCart: (req, res, next) => {
         try {
             // Normalizamos y validamos el ID antes de agregarlo al carrito
             const productId = productService.normalizeId(req.params.id);
@@ -55,7 +54,6 @@ const cartController = {
         cartService.updateQuantity(req.session, productId, action);
         
         res.redirect('/cart');
-    updateCart: (req, res, next) => {
         try {
             // Validamos el ID
             const productId = productService.normalizeId(req.params.id);
@@ -86,6 +84,7 @@ const cartController = {
             next(error);
         }
     }
+}
 };
 
 module.exports = cartController;

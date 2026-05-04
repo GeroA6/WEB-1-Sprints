@@ -36,7 +36,8 @@ const productController = {
 
         // 4. Escenario 1: Si el producto existe, renderizamos la vista de detalle.
         res.render('pages/productDetail', { product: product, isAuthPage: false });
-    },
+    }
+   },
 
     // Método que renderiza la lista de productos
     listProducts: (req, res) => {

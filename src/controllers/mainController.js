@@ -37,7 +37,7 @@ const mainController = {
     getLogin: (req, res) => {
         res.render("pages/login", { isAuthPage: true });
     },
-    getProduct: (req, res) => {
+    getProduct: (req, res, next) => {
         // llamamos la funcion aux para obtener los productos desde el JSON
         try {
             const productsData = getAllProducts();
