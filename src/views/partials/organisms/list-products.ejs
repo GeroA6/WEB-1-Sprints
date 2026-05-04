@@ -6,7 +6,7 @@
                 
                 <% products.forEach(product => { %>
                     <%- include('../molecules/product-card', { 
-                        link: '/product/' + product.id, 
+                        link: '/products/' + product.id, 
                         imgSrc: product.image ? '/img/' + product.image : '/img/default-product.png', 
                         title: product.name, 
                         puntos: product.price 
@@ -17,21 +17,21 @@
 
                 <%# FALLBACK TEMPORAL: Esto se va a mostrar en el index hasta que armen la US6 y US7 %>
                 <%- include('../molecules/product-card', { 
-                    link: '/product/1', 
+                    link: '/products/1', 
                     imgSrc: '/img/producto-jack.jpg', 
                     title: 'Whiskey Jack Daniels Honey 750ml', 
                     puntos: '19.900' 
                 }) %>
         
                 <%- include('../molecules/product-card', { 
-                    link: '/product', 
+                    link: '/products/2', 
                     imgSrc: '/img/producto-defoult.jpg', 
                     title: 'Nombre del producto o servicio', 
                     puntos: 'xx.xxx' 
                 }) %>
 
                 <%- include('../molecules/product-card', { 
-                    link: '/product', 
+                    link: '/products/3', 
                     imgSrc: '/img/producto-defoult.jpg', 
                     title: 'Nombre del producto o servicio', 
                     puntos: 'xx.xxx' 
