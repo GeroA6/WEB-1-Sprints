@@ -76,7 +76,7 @@ const productRoutes = require('./src/routes/productRoutes');
 
 // Le decimos a la app que para cualquier petición que empiece con '/products',
 // debe usar las rutas definidas en `productRoutes`.
-app.use('/products', productRoutes);
+//app.use('/products', productRoutes);
 // Le decimos a nuestra aplicación que para cualquier petición que empiece con '/',
 // debe usar las rutas definidas en `mainRoutes`.
 app.use('/', mainRoutes);
