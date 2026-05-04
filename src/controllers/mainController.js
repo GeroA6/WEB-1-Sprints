@@ -47,7 +47,7 @@ const mainController = {
             
             const productPrincipal = productsData.find(p => p.id === productId);
             
-            let relacionados = productsData.filter(p => p.category &&
+            let relacionados = productsData.filter(p => p.category === productPrincipal.category &&
                 p.id !== productId
             );
 
@@ -57,8 +57,7 @@ const mainController = {
                     .slice(0, 4);
             }
 
-        res.render("pages/product", { isAuthPage: false, product: productPrincipal, relacionados: relacionados });
-            res.render("pages/product", { isAuthPage: false, product: productPrincipal, relacionados: relacionados });
+        res.render("pages/productDetail", { isAuthPage: false, product: productPrincipal, relacionados: relacionados });
         } catch (error) {
             next(error);
         }
