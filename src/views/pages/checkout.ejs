@@ -1,25 +1,23 @@
-<%- include('../partials/global/head')%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Próximamente</title>
+    <!-- Puedes enlazar tu archivo CSS aquí si ya tienes estilos de botones globales -->
+</head>
 <body>
-    <%- include('../partials/organisms/header')%>
-
-    <main>
-        <div class="main-checkout">
-            <form action="/checkout" method="POST" class="checkout__form">
-                <div class="form__articulos">
-                    <%- include('../partials/molecules/shipping-form')%>
-                    <%- include('../partials/molecules/payment-form')%>
-                </div>
-
-                <label for="condiciones" class="form__condiciones">
-                    <input type="checkbox" id="condiciones" required> Acepta los términos y condiciones
-                </label>
-                
-                <button type="submit" class="form__continuar">Continuar con el pago</button>
-            </form>
-
-            <%- include('../partials/organisms/checkout-cart')%>
+    <!-- Estructura simple para mostrar el mensaje amigable -->
+    <main style="text-align: center; margin-top: 100px; font-family: Arial, sans-serif;">
+        
+        <h1>Checkout disponible en el próximo sprint</h1>
+        
+        <div style="margin-top: 30px;">
+            <!-- Botón 1: Volver al carrito -->
+            <a href="/cart" style="display: inline-block; padding: 10px 20px; margin: 0 10px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">Volver al carrito</a>
+            <!-- Botón 2: Volver al inicio -->
+            <a href="/" style="display: inline-block; padding: 10px 20px; margin: 0 10px; background-color: #6C757D; color: white; text-decoration: none; border-radius: 5px;">Volver al inicio</a>
         </div>
     </main>
-
-    <%- include('../partials/organisms/footer')%>
 </body>
+</html>
