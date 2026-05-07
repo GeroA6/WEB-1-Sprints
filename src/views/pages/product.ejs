@@ -18,7 +18,8 @@
                     id: producto.id,
                     title: producto.name,
                     puntos: producto.price,
-                    descripcion: producto.description
+                    descripcion: producto.description,
+                    stock: producto.stock
                 }) %>
             </div>
         </div>
@@ -41,7 +42,8 @@
                             link: '/products/' + relacionado.id,
                             imgSrc: relacionado.image ? '/img/products/' + relacionado.image : '/img/producto-defoult.jpg',
                             title: relacionado.name,
-                            puntos: relacionado.price
+                            puntos: relacionado.price,
+                            stock: relacionado.stock
                         }) %>
                     <% }) %>
             </div>

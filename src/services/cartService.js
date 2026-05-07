@@ -11,6 +11,17 @@ const cartService = {
 
     // ESCENARIO 1: Agregar al carrito
     addProduct: (session, productId) => {
+        // --- INICIO DE LA VALIDACIÓN DE STOCK (US 11) ---
+        // Obtenemos el producto completo para verificar su stock
+        const productToAdd = productsService.getProductById(productId);
+
+        // Si el producto no existe o su stock es 0, no hacemos nada.
+        if (!productToAdd || productToAdd.stock === 0) {
+            console.warn(`Intento de agregar al carrito un producto sin stock o inexistente. ID: ${productId}`);
+            return; // Detenemos la ejecución de la función aquí.
+        }
+        // --- FIN DE LA VALIDACIÓN DE STOCK ---
+
         cartService.initCart(session);
         
         // Buscamos si ese producto ya está guardado en el carrito de la sesión
