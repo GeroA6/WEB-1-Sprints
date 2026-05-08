@@ -29,7 +29,7 @@ const mainController = {
             .sort(() => 0.5 - Math.random()) // lo mezclamos
             .slice(0, 10); // Limite de 10 productos
 
-        res.render("pages/index", { isAuthPage: false, sugeridos: sugeridos, masPedidos:masPedidos }); //array a la vista
+        res.render("pages/index", { isAuthPage: false, sugeridos: sugeridos, masPedidos:masPedidos, products: productsData }); //array a la vista
     },
     getCheckout: (req, res) => {
         res.render("pages/checkout", { isAuthPage: false });

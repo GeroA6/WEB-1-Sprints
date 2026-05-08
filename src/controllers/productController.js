@@ -33,9 +33,6 @@ const productController = {
         } catch (error) {
             next(error);
         }
-
-        // 4. Escenario 1: Si el producto existe, renderizamos la vista de detalle.
-        res.render('pages/productDetail', { product: product, isAuthPage: false });
     }
    },
 

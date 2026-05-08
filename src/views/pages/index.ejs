@@ -6,7 +6,7 @@
         <%- include('../partials/organisms/publicidad') %>
          <section class="section-productos">
              <div class="contenedor-productos">
-                <%- include('../partials/organisms/list-products') %>
+                <%- include('../partials/organisms/list-products', { products: products }) %>
                 <h2>Te puede interesar</h2>
                 <div class="box-productos"> <!-- inyectamos el array de productos sugeridos-->
                     <% sugeridos.forEach(product => { %> <!--//iteramos sobre los productos sugeridos y mostramos -->
@@ -28,7 +28,7 @@
                         puntos: product.price
                        }) %> <%}) %> 
                 </div>
-                <%- include('../partials/organisms/list-products') %>
+                
              </div>
          </section>
         <%- include('../partials/organisms/nav-bar') %>
