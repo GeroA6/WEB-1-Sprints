@@ -1,21 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-
-// Definimos la ruta exacta al archivo JSON usando path.join y __dirname
-// __dirname nos da la ruta de la carpeta actual (services), y de ahí subimos un nivel y entramos a data
-const productsFilePath = path.join(__dirname, '../data/products.json');
+// Importamos el modelo
+const productModel = require('../models/productModel');
 
 const productsService = {
-    
-    // Función para leer y convertir el JSON a un Array de JS, con esto evitamos repetir código cada vez que necesitemos acceder a los productos
-    _readJson: function() {
-        // Leemos el archivo JSON
-        const productsJSON = fs.readFileSync(productsFilePath, 'utf-8');
-        // Lo convertimos en un objeto/array de JS
-        return JSON.parse(productsJSON);
-    },
-
-    // MÉTODOS PARA LOS CONTROLLERS
 
     // Función para normalizar y validar IDs de productos
     normalizeId: function(id) {
@@ -29,7 +15,8 @@ const productsService = {
         }
 
         // 2. Escenario: ID numérico pero inexistente -> 404
-        const product = this.getProductById(parsedId);
+        //ahora le pediremos al modelo que lo busque
+        const product = productModel.findById(parsedId);
         if (!product) {
             const error = new Error('¡Ups! Producto no encontrado.');
             error.status = 404;
@@ -38,11 +25,18 @@ const productsService = {
 
         return parsedId;
     },
-
+    // funcion para obtener productos por categoria
+    getProductsByCategory: function(categoryName) {
+        const products = productModel.findAll();
+        // Filtramos comparando en minúsculas para evitar errores si escriben "Bebidas" o "bebidas"
+        return products.filter(product => 
+            product.category.toLowerCase() === categoryName.toLowerCase()
+        );
+    },
     // funcion para obtener todos los productos
     getAllProducts: function(sortQuery) {
-
-        const products = this._readJson();
+        //ahora le pediremos todos al modelo
+        const products = productModel.findAll();
         // Hacemos una copia del array para no modificar el JSON original en memoria
         let sortedProducts = [...products];
 
@@ -60,22 +54,13 @@ const productsService = {
 
     // funcion para obtener un producto por su ID
     getProductById: function(id) {
-        // Leemos el JSON y luego usamos .find() para obtener el producto que coincida con el ID
-        const products = this._readJson();
-        return products.find(product => product.id == id);
-    },
-
-    // funcion para obtener productos por categoria
-    getProductsByCategory: function(categoryName) {
-        const products = this._readJson();
-        // Usamos .filter() que devuelve un array con todos los que coincidan con la categoría dada
-        return products.filter(product => product.category === categoryName);
+        
+        return productModel.findById(id);
     },
 
     // buscador de productos por nombre, devuelve un array con los productos que contengan el texto buscado
     searchProducts: function(query) {
-        const products = this._readJson();
-        //convertimos la consulta a minusculas para que coincida
+        const products = productModel.findAll();
         const lowerQuery = query.toLowerCase();
         return products.filter(product => 
             product.name.toLowerCase().includes(lowerQuery)
