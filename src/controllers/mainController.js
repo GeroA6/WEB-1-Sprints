@@ -1,23 +1,13 @@
 // Importamos solo `validationResult` porque el controlador solo necesita LEER los resultados de la validación.
 const { validationResult } = require('express-validator');
-const productService = require('../services/productService');
-
-const fs = require('fs'); // Para leer archivos JSON
-const path = require('path'); // para construir rutas de archivos de forma
-
-// Funcion auxiliar para obtener los productos desde JSON. Se puede usar en cualquier metodo del controlador.
-const getAllProducts = () => {
-    const productsPath = path.join(__dirname, '../data/products.json');
-    const productsData = fs.readFileSync(productsPath, 'utf-8');
-    return JSON.parse(productsData);
-}
+const productService = require('../services/productService'); //aqui exportamos al servicio del producto
 
 // Creamos un objeto que contendrá toda la lógica de nuestras rutas.
 const mainController = {
     // Cada método corresponde a una acción o vista.
     getHome: (req, res) => {
         // obtener productos con la funcion aux
-        const productsData = getAllProducts();
+        const productsData = productService.getAllProducts();
 
         // Para mostrar productos sugeridos, mezclamos el array de productos y tomamos los primeros 5.
         const sugeridos = productsData
@@ -40,7 +30,7 @@ const mainController = {
     getProduct: (req, res, next) => {
         // llamamos la funcion aux para obtener los productos desde el JSON
         try {
-            const productsData = getAllProducts();
+            const productsData = productService.getAllProducts();
     
             // Usamos la normalización centralizada para validar
             const productId = productService.normalizeId(req.params.id);
@@ -110,10 +100,8 @@ const mainController = {
     },
 
     getCategory: (req, res) => {
-        const productsData = getAllProducts();
         const requestedCategory = req.params.category; // obtenemos la categoría de la URL
-        const productosFiltrados = productsData.filter(
-            p => p.category.toLowerCase() === requestedCategory.toLowerCase()); // filtramos los productos por categoría (ignorando mayúsculas/minúsculas)
+        const productosFiltrados = productService.getProductsByCategory(requestedCategory);// filtramos los productos por categoría (ignorando mayúsculas/minúsculas)
     
             res.render("pages/category", {
                 isAuthPage: false, // no es una página de autenticación
