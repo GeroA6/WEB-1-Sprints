@@ -1,42 +1,22 @@
 <section class="section-productos">
     <div class="contenedor-productos">
         <div class="box-productos">
-          <%# Evaluamos si existe la variable products (para Search, Categorías, etc.) %>
-            <% if (locals.products) { %>
+          <%# Si la variable products existe y tiene al menos 1 producto, los dibujamos %>
+            <% if (locals.products && products.length > 0) { %>
                 
                 <% products.forEach(product => { %>
                     <%- include('../molecules/product-card', { 
                         link: '/products/' + product.id, 
                         imgSrc: product.image ? '/img/' + product.image : '/img/default-product.png', 
                         title: product.name, 
-                        puntos: product.price 
+                        puntos: product.price,
+                        stock: product.stock //
                     }) %>
                 <% }) %>
 
             <% } else { %>
-
-                <%# FALLBACK TEMPORAL: Esto se va a mostrar en el index hasta que armen la US6 y US7 %>
-                <%- include('../molecules/product-card', { 
-                    link: '/products/1', 
-                    imgSrc: '/img/producto-jack.jpg', 
-                    title: 'Whiskey Jack Daniels Honey 750ml', 
-                    puntos: '19.900' 
-                }) %>
-        
-                <%- include('../molecules/product-card', { 
-                    link: '/products/2', 
-                    imgSrc: '/img/producto-defoult.jpg', 
-                    title: 'Nombre del producto o servicio', 
-                    puntos: 'xx.xxx' 
-                }) %>
-
-                <%- include('../molecules/product-card', { 
-                    link: '/products/3', 
-                    imgSrc: '/img/producto-defoult.jpg', 
-                    title: 'Nombre del producto o servicio', 
-                    puntos: 'xx.xxx' 
-                }) %>
-
+                <%# Si está vacío (ej: no hay productos relacionados), mostramos un mensaje amigable %>
+                <p style="text-align: center; width: 100%; color: #666;">No hay productos para mostrar en esta sección.</p>
             <% } %>
         </div>
     </div>

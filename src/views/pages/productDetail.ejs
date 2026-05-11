@@ -18,11 +18,12 @@
                 id: product.id,
                 title: product.name,          
                 puntos: product.price,        
-                descripcion: product.description 
+                descripcion: product.description,
+                stock: product.stock
                }) %>
             </div>
         </div>
-        <%- include('../partials/organisms/list-products')%>
+        <%- include('../partials/organisms/list-products', { products: relacionados }) %>
         <%- include('../partials/organisms/nav-bar')%>
     </main>
     <%- include('../partials/organisms/footer') %>
