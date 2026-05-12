@@ -1,12 +1,19 @@
 <div class="producto-descripcion"> 
     <h1><%= title %></h1>
-    <% if (locals.stock > 0) { %>
         <form action="/cart/add/<%= id %>" method="POST">
+            <% if (locals.stock > 0) { %>
+            <p style="font-size: 0.9rem; color: #28a745; margin-bottom: 10px;">
+                Stock disponible: <%= stock %>
+            </p>
             <button type="submit" class="boton-agregar">Agregar al Carrito</button>
         </form>
     <% } else { %>
-        <span class="badge-sin-stock" style="color: #ff4d4f; font-weight: bold; display: block; margin-bottom: 10px;">Sin stock</span>
-        <button class="boton-agregar" disabled style="background-color: #cccccc; cursor: not-allowed; opacity: 0.7;">Agregar al Carrito</button>
+       <p style="font-size: 0.9rem; color: #ff4d4f; margin-bottom: 10px; font-weight: bold;">
+                Producto sin stock
+            </p>
+            <button type="button" class="boton-agregar" style="background-color: #ccc; cursor: not-allowed;" disabled>
+                Sin Stock
+            </button>
     <% } %>
     <div class="puntos">
         <h1><%= puntos %></h1>

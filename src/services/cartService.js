@@ -29,7 +29,9 @@ const cartService = {
 
         if (existingItem) {
             // Si ya existe, solo le sumamos 1 a la cantidad
-            existingItem.quantity += 1;
+           if (existingItem.quantity < productToAdd.stock) {
+                existingItem.quantity += 1;
+            }
         } else {
             // Si no existe, lo empujamos (push) como un objeto nuevo
             session.cart.push({ productId: productId, quantity: 1 });
@@ -80,10 +82,15 @@ const cartService = {
         // Buscamos el índice del producto en el carrito
         const itemIndex = session.cart.findIndex(item => item.productId == productId);
 
+        // Traemos el producto para saber su stock máximo
+        const product = productsService.getProductById(productId);
+
         // Si encontramos el producto, actualizamos la cantidad según la acción
-        if (itemIndex !== -1) {
+        if (itemIndex !== -1 && product) {
             if (action === 'increase') {
-                session.cart[itemIndex].quantity += 1;
+                if (session.cart[itemIndex].quantity < product.stock) {
+                    session.cart[itemIndex].quantity += 1;
+                }
             } else if (action === 'decrease') {
                 session.cart[itemIndex].quantity -= 1;
                 
