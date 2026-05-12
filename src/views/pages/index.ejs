@@ -6,6 +6,16 @@
         <%- include('../partials/organisms/publicidad') %>
          <section class="section-productos">
              <div class="contenedor-productos">
+                <h2> Nuestros Productos </h2>
+                <!-- Desplegable de ordenamiento -->
+                    <div class="filtros-orden">
+                        <label for="sort" style="font-weight: bold; margin-right: 10px;">Ordenar por precio:</label>
+                        <select id="sort" onchange="window.location.href='/?sort=' + this.value;" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+                            <option value="">Destacados</option>
+                            <option value="asc" <%= locals.sortQuery === 'asc' ? 'selected' : '' %>>Menor a Mayor</option>
+                            <option value="desc" <%= locals.sortQuery === 'desc' ? 'selected' : '' %>>Mayor a Menor</option>
+                        </select>
+                    </div>
                 <%- include('../partials/organisms/list-products', { products: products }) %>
                 <h2>Te puede interesar</h2>
                 <div class="box-productos"> <!-- inyectamos el array de productos sugeridos-->

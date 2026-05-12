@@ -6,11 +6,14 @@ const productService = require('../services/productService'); //aqui exportamos 
 const mainController = {
     // Cada método corresponde a una acción o vista.
     getHome: (req, res) => {
-        // obtener productos con la funcion aux
-        const productsData = productService.getAllProducts();
+        // Atrapamos el pedido de orden desde la URL (ej: /?sort=asc)
+        const sortQuery = req.query.sort;
+
+        // Le pasamos el sortQuery al servicio.
+        const productsData = productService.getAllProducts(sortQuery);
 
         // Para mostrar productos sugeridos, mezclamos el array de productos y tomamos los primeros 5.
-        const sugeridos = productsData
+        const sugeridos = [...productsData]
             .sort(()=> 0.5 - Math.random())
             .slice(0, 5); // Esto es solo para mostrar algo aleatorio
 
@@ -19,7 +22,7 @@ const mainController = {
             .sort(() => 0.5 - Math.random()) // lo mezclamos
             .slice(0, 10); // Limite de 10 productos
 
-        res.render("pages/index", { isAuthPage: false, sugeridos: sugeridos, masPedidos:masPedidos, products: productsData }); //array a la vista
+        res.render("pages/index", { isAuthPage: false, sugeridos: sugeridos, masPedidos:masPedidos, products: productsData, sortQuery: sortQuery }); //array a la vista
     },
     getCheckout: (req, res) => {
         res.render("pages/checkout", { isAuthPage: false });
