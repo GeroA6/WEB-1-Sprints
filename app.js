@@ -15,6 +15,8 @@ const session = require('express-session');
 // Importamos dotenv para cargar las variables de entorno desde el archivo .env
 require('dotenv').config();
 
+// importamos la configuracion de la BD para que se conecte al arrancar el servidor
+require('./src/db/database.js');
 // ========================================================================
 // 2. INICIALIZACIÓN Y CONFIGURACIÓN BÁSICA
 // ========================================================================
