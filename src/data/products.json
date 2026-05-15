@@ -56,7 +56,17 @@
     "category": "Indumentaria",
     "description": "Remera 100% algodón, corte oversize, cuello redondo. Ideal para uso diario.",
     "image": "producto-remera.jpg",
-    "stock": 35,
+    "stock": 15,
+    "masPedidos": false
+  },
+  {
+    "id": 7,
+    "name": "Velador de Mesa con Lámpara LED",
+    "price": 12000,
+    "category": "Hogar",
+    "description": "Velador de mesa con diseño moderno y lámpara LED regulable en intensidad.",
+    "image": "producto-velador.jpg",
+    "stock": 5,
     "masPedidos": false
   }
 ]

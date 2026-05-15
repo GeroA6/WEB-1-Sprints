@@ -59,6 +59,7 @@ try {
         }
     });
 
+    //invoco la función de migración con el array de productos que leí del JSON.
     migrate(products);
     console.log("Migración completada con éxito");
 
