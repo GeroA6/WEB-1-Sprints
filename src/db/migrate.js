@@ -8,13 +8,13 @@ const db = require('./database');
 const productsJsonPath = path.join(__dirname, '../data/products.json');
 
 try {
-    console.log("🚀 Iniciando migración de datos...");
+    console.log("iniciando migración de datos...");
 
-    // 1. Leo y convierto el archivo products.json para poder usar sus datos.
+    // leo y convierto el archivo products.json para poder usar sus datos.
     const productsData = fs.readFileSync(productsJsonPath, 'utf-8');
     const products = JSON.parse(productsData);
 
-    // 2. Preparo las consultas de SQLite.
+    // Preparo las consultas de SQLite.
     // INSERT OR IGNORE para no tener problemas y duplicar datos si es que se ejecuta mas de una vez.
     const insertCategory = db.prepare(`INSERT OR IGNORE INTO categories (name) VALUES (?)`);
     const getCategory = db.prepare(`SELECT id FROM categories WHERE name = ?`);
@@ -25,20 +25,33 @@ try {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
-    // 3. Se ejecuta todo dentro de una transacción para que sea más rápido y seguro.
+    // Preparación de sentencias para truncar tablas y reiniciar auto-incrementales
+    const clearProducts = db.prepare(`DELETE FROM products`);
+    const clearCategories = db.prepare(`DELETE FROM categories`);
+    const resetSequences = db.prepare(`DELETE FROM sqlite_sequence WHERE name IN ('products', 'categories')`);
+
+    // Se ejecuta todo dentro de una transacción para que sea más rápido y seguro (se hace todo o no se hace nada).
     const migrate = db.transaction((productsArray) => {
+        
+        // truncamos para que al migrar del json no se ignore algun cambio en un atributo de un producto que ya estaba en la base de datos.
+        clearProducts.run();
+        clearCategories.run();
+        resetSequences.run();  
+
         for (const prod of productsArray) {
-            // A. Guarda la categoría del producto si es que todavía no existe en la tabla.
+
+            
+            // guarda la categoría del producto si es que todavía no existe en la tabla.
             insertCategory.run(prod.category);
             
-            // B. Busca el ID de esa categoría (ya sea la que se acaba de insertar o la que ya estaba).
+            // busca el ID de esa categoría (ya sea la que se acaba de insertar o la que ya estaba).
             const categoryRow = getCategory.get(prod.category);
             const categoryId = categoryRow.id;
 
-            // C. Manejar el booleano y el pequeño error de tipeo en el JSON (masPedido vs masPedidos)
+            // manejar el booleano y el pequeño error de tipeo en el JSON (masPedido vs masPedidos)
             const isMasPedidos = (prod.masPedidos === true || prod.masPedido === true) ? 1 : 0;
 
-            // D. Inserta el producto en la base de datos manteniendo el ID que traía del JSON.
+            // inserta el producto en la base de datos manteniendo el ID que traía del JSON.
             insertProduct.run(
                 prod.id, prod.name, prod.price, prod.description, 
                 prod.image, prod.stock, categoryId, isMasPedidos
