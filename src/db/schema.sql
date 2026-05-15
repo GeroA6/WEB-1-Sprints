@@ -7,8 +7,9 @@ CREATE TABLE IF NOT EXISTS products (
     description TEXT,
     image TEXT,
     stock INTEGER DEFAULT 0,
-    category TEXT, 
-    masPedidos INTEGER DEFAULT 0 -- Usamos 0 para false y 1 para true
+    category_id INTEGER, 
+    masPedidos INTEGER DEFAULT 0, -- Usamos 0 para false y 1 para true
+    FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
 -- Tabla de Categorías 
