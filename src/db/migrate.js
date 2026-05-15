@@ -25,10 +25,12 @@ try {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
-    // Preparación de sentencias para truncar tablas y reiniciar auto-incrementales
+    // Preparación de sentencias para truncar tablas
     const clearProducts = db.prepare(`DELETE FROM products`);
     const clearCategories = db.prepare(`DELETE FROM categories`);
-    const resetSequences = db.prepare(`DELETE FROM sqlite_sequence WHERE name IN ('products', 'categories')`);
+
+    // operacion que activa el truncate optimizer de SQLite para reiniciar los auto-incrementales.
+    const resetIncrementals = db.prepare(`DELETE FROM sqlite_sequence WHERE name IN ('products', 'categories')`);
 
     // Se ejecuta todo dentro de una transacción para que sea más rápido y seguro (se hace todo o no se hace nada).
     const migrate = db.transaction((productsArray) => {
@@ -36,7 +38,7 @@ try {
         // truncamos para que al migrar del json no se ignore algun cambio en un atributo de un producto que ya estaba en la base de datos.
         clearProducts.run();
         clearCategories.run();
-        resetSequences.run();  
+        resetIncrementals.run();  
 
         for (const prod of productsArray) {
 
