@@ -1,4 +1,4 @@
-// importamos el servicio de productos para leer el JSON
+// importamos el servicio de productos para ahora accerder a BD (SQLITE) y no al JSON
 const productsService = require('./productService');
 
 const cartService = {
