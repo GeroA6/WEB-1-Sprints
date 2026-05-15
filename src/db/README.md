@@ -31,3 +31,17 @@ Usamos **Foreign Keys** para que, si un usuario desaparece o un producto se borr
 Para no tener que ejecutar comandos manuales, configuramos `database.js` para que:
 1. Cree el archivo `database.db` si no existe.
 2. Lea el archivo `schema.sql` y cree todas las tablas automáticamente al arrancar.
+
+## Funcionamiento de `migrate-js`
+Ya existe un comando en `package.json` por lo que para ejecutar la migracion hay que escrbir en la consola 
+```bash
+npm run migrate
+```
+
+
+1. **Conexión Inicial:** Al hacer `require('./database')`, Node va a leer ese archivo, el cual a su vez lee el `schema.sql` y crea la base de datos vacía (si no estaba creada).
+2. **Lectura de Datos:** Con el módulo `fs` agarra el `products.json` y lo convierte en un array de objetos JavaScript `(JSON.parse)` para poder recorrerlo producto por producto.
+3. **Preparación `(db.prepare)`:** La consulta de SQL se deja "preparada" con los signos de pregunta (`?`). SQLite la compila internamente, haciéndola más rápida y previniendo inyecciones de código malicioso.
+4. **La Lógica Central (La Transacción):** Se recorre con un for todos los productos. Como en la tabla los productos tienen un `category_id`, primero se encarga de guardar la categoría en texto, obtener su ID numérico generado por la base de datos, y luego recién ahí guardar el producto completo junto con el boolean arreglado (1 o 0), hay un atributo que esta escrito de dos formas diferentes en el JSON.
+5. **¿Por qué `db.transaction()?`** Si guardamos 50 productos uno a uno en SQLite, es muy lento porque abre y cierra el archivo de la DB 50 veces. Al envolverlo en una transacción, SQLite procesa todo en la memoria y lo guarda de un solo impacto. Además, si falla un producto en el medio, se cancela todo, evitando bases de datos a medio cargar.
+* `productService.js` / `productModel.js` todavia estan programados para buscar y leer el `JSON`. Hay que modificar esos archivos para que ahora le pidan los datos directamente a la base de datos usando consultas SQL (ej: SELECT * FROM products)
