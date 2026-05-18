@@ -1,5 +1,5 @@
 // importamos la conexión a la base de datos para hacer consultas
-const db = require('../db/database');
+const db = require('../db/dataBase');
 
 const productModel = {
     // Busca todos y, si le llega la orden, los ordena directamente con SQL
