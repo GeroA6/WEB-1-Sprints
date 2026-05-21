@@ -1,8 +1,8 @@
-const fs = requiere('fs');
-const path = requiere('path');
-const db = require('./dataBase');
+const fs = require('fs');
+const path = require('path');
+const db = require('../dataBase');
 
-function inicianlizarDB(){
+function inicializarDB(){
     // leemos el archivo schema.sql
     const schemaPath = path.join(__dirname, 'schema.sql');
     const schema = fs.readFileSync(schemaPath, 'utf-8');
@@ -12,4 +12,4 @@ function inicianlizarDB(){
     console.log("Base de datos inicializada");
 }
 
-inicianlizarDB();
+inicializarDB();
