@@ -3,7 +3,7 @@ const path = require('path');
 
 // Traigo database.js. Al hacer esto, también me aseguro de que se creen las tablas 
 // (si no existen) gracias al db.exec(schema) que ya armé ahí.
-const db = require('./database');
+const db = require('../dataBase');
 
 const productsJsonPath = path.join(__dirname, '../data/products.json');
 
