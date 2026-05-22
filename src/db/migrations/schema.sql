@@ -38,11 +38,11 @@ CREATE TABLE IF NOT EXISTS orders (
 
 -- Tabla de Ítems de Orden 
 CREATE TABLE IF NOT EXISTS order_items (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
     order_id INTEGER,
     product_id INTEGER,
     quantity INTEGER,
     price REAL,
+    PRIMARY KEY (order_id, product_id),
     FOREIGN KEY (order_id) REFERENCES orders(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );

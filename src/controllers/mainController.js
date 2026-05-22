@@ -18,7 +18,7 @@ const mainController = {
             .slice(0, 5); // Esto es solo para mostrar algo aleatorio
 
         const masPedidos = productsData
-            .filter(product => product.masPedidos === true) // filtramos por el flag "masPedidos" 
+            .filter(product => product.masPedidos === 1) // filtramos por el flag "masPedidos" 
             .sort(() => 0.5 - Math.random()) // lo mezclamos
             .slice(0, 10); // Limite de 10 productos
 

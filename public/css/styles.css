@@ -88,6 +88,7 @@ main{
     border-radius: 0.8rem;
     display: flex;
     align-items: center;
+    position: relative;
 }
 .icon:hover{
     background-color: #1a8411;
@@ -103,6 +104,24 @@ main{
 }
 .icon p{
     padding: 0 0 0 0.5rem;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #e63946; 
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 /* fin - header*/
 

@@ -17,6 +17,9 @@
             <div class="box-icons">
                 <div class="icon">
                     <a href="/cart" class="fa-solid fa-cart-shopping"></a>
+                    <% if (locals.cartCount && locals.cartCount > 0) { %>
+                        <span class="cart-badge"><%= locals.cartCount %></span>
+                    <% } %>
                 </div>
                 <div class="icon">    
                     <a href="/profile" class="fa-solid fa-user">
