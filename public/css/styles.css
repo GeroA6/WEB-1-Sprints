@@ -53,15 +53,26 @@ main{
 .header-search input{
     width: 100%;
     padding: 0.5rem;
+    padding-right: 2.5rem;
     border: 1px solid #49505263;
     border-radius: 1rem;
     outline: none;
 }
-.header-search a{
+.header-search a, 
+.header-search button,
+.header-search i {
     position: absolute;
-    right: 1rem;
+    bottom: 0.2rem;
+    right: 0.5rem;
+    background-color: transparent;
+    border: none;
+    color: #4d4646;
+    cursor: pointer;
+    font-size: 1.1rem;
 }
-.header-search a:hover{
+.header-search a:hover,
+.header-search button:hover,
+.header-search i:hover {
     color: #1a8411;
 }
 .box-icons{
@@ -225,7 +236,6 @@ main{
 /* inicio - sección del nav*/
 .nav-pagina{
     width: 100%;
-    height: 20%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -254,6 +264,7 @@ main{
     align-items: center;
     gap: .4rem;
     padding: 1rem 0;
+    cursor: pointer;
 }
 .left{
     border-radius: 1rem 0 0 1rem;
@@ -264,6 +275,9 @@ main{
 .box-nav:hover{
     background-color: #1ea811;
     transition: 0.3s;
+}
+.box-nav:focus{
+    background-color: #1a6813;
 }
 .box-nav i{
     color: #fff;
@@ -461,19 +475,22 @@ main{
     box-shadow: 0px 10px 10px 0px #4950522a;
     background-color: #fff;
 }
-.producto-descripcion a{
-    display: flex;
-    justify-content: center;
+.producto-descripcion button{
+    width: 100%;
     background-color: #1ea811;
     border-radius: 0.7rem;
     padding: 0.5rem;
     text-decoration: none;
     color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: "Roboto", sans-serif;
 }
-.producto-descripcion a:hover{
+
+.producto-descripcion a:hover, button:hover{
     background-color: #1a8411;
 }
-.producto-descripcion a:focus{
+.producto-descripcion a:focus, button:focus{
     background-color: #1a6813;
 }
 .puntos{
@@ -531,10 +548,19 @@ main{
     text-decoration: none;
     color: #fff;
 }
-.producto-right a:hover, .boton-end:hover{
+.producto-right .boton-quitar, .boton-vaciar{
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #1ea811;
+    color: #fff;
+    cursor: pointer;
+    border-style: none;
+    font-family: "Roboto", sans-serif;
+}
+.producto-right a:hover, .boton-end:hover, .boton-quitar:hover, .boton-vaciar:hover{
     background-color: #1a8411;
 }
-.producto-right a:focus, .boton-end:focus{
+.producto-right a:focus, .boton-end:focus, .boton-quitar:focus, .boton-vaciar:focus{
     background-color: #1a6813;
 }
 
@@ -545,6 +571,7 @@ main{
     border: 1px solid #1ea811;
     padding: 0.5rem 1rem;
 }
+
 .boton button{
     border: none;
     background-color: transparent;
@@ -567,6 +594,7 @@ main{
     text-decoration: none;
     color: #fff;
 }
+
 /* fin - pagina cart */
 
 
@@ -805,6 +833,7 @@ footer{
         align-items: center;
         width: 100%;
         padding: 1rem;
+        cursor: pointer;
     }
     .left{
         border-radius: 1rem 1rem 0 0;
