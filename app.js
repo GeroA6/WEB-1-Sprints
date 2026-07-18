@@ -5,6 +5,8 @@
 // Importamos el framework Express, que nos facilita la creación y manejo del servidor web.
 const express = require('express'); 
 
+// Importamos el módulo 'cors' para permitir solicitudes de diferentes dominios esto nos servirá para el front 
+const cors = require('cors');
 // Importamos el módulo 'path' (nativo de Node.js) para manejar las rutas de las carpetas 
 // de forma segura, sin importar si usamos Windows, Mac o Linux.
 const path = require('path'); 
@@ -28,6 +30,9 @@ const app = express();
 // Definimos en qué "canal" (puerto) de nuestra red local va a escuchar el servidor.
 // El 3000 es el estándar más usado para desarrollo.
 const port = 3000; 
+
+// Habilitamos CORS para permitir solicitudes desde otros dominios
+app.use(cors());
 
 // ========================================================================
 // 3. CONFIGURACIÓN DEL MOTOR DE VISTAS (RENDERIZADO)
