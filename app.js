@@ -57,7 +57,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // Middleware global para poder leer los datos que viajan en el `body` de un formulario.
 // Es crucial para que `req.body` funcione en tus controladores.
 app.use(express.urlencoded({ extended: false }));
-
+// Permite a Express entender los JSON que llegan desde el Front End (React)
+app.use(express.json());
 // ========================================================================
 // CONFIGURACIÓN DE SESIONES
 // ========================================================================
@@ -83,7 +84,7 @@ const productRoutes = require('./src/routes/productRoutes');
 
 // Le decimos a la app que para cualquier petición que empiece con '/products',
 // debe usar las rutas definidas en `productRoutes`.
-//app.use('/products', productRoutes);
+app.use('/products', productRoutes);
 // Le decimos a nuestra aplicación que para cualquier petición que empiece con '/',
 // debe usar las rutas definidas en `mainRoutes`.
 app.use('/', mainRoutes);

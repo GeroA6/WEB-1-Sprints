@@ -52,6 +52,24 @@ const productModel = {
         `;
         // El comodín '%' significa "cualquier texto antes o después"
         return db.prepare(query).all(`%${keyword.toLowerCase()}%`);
+    },
+
+    // Inserta un nuevo producto en la base de datos
+    create: function(productData) {
+        const query = `
+            INSERT INTO products (name, description, price, stock, image)
+            VALUES (?, ?, ?, ?, ?)
+        `;
+        // Usamos .run() porque es una acción de escritura (INSERT), no de lectura (GET/ALL)
+        const info = db.prepare(query).run(
+            productData.name, 
+            productData.description, 
+            productData.price, 
+            productData.stock, 
+            productData.image
+        );
+        
+        return info; // Retorna información de la inserción, como el ID generado
     }
 
 };

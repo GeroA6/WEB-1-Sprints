@@ -1,4 +1,5 @@
 const productService = require('../services/productService');
+const productModel = require('../models/productModel');
 
 const productController = {
 
@@ -65,6 +66,26 @@ const productController = {
             products: results,
             searchQuery: searchQuery 
         });
+    },
+
+    // Método para crear el producto (capturado del POST)
+    createProduct: (req, res) => {
+        const nuevoProducto = req.body;
+
+        try {
+            // Llamamos al modelo para que ejecute el SQL
+            const resultado = productModel.create(nuevoProducto);
+
+            // Respondemos a React con código 200 (OK)
+            res.status(200).json({ 
+                mensaje: "Producto guardado correctamente en SQLite",
+                id_generado: resultado.lastInsertRowid // SQLite devuelve el ID creado
+            });
+        } catch (error) {
+            console.error("Error al insertar en la base de datos:", error);
+            // Si el SQL falla (por ejemplo, falta un dato NOT NULL), devolvemos error 500
+            res.status(500).json({ mensaje: "Error interno al guardar el producto" });
+        }
     }
 };
 
