@@ -9,34 +9,31 @@ const productController = {
      * @param {import('express').Response} res - El objeto de respuesta de Express.
      * @param {import('express').NextFunction} next - La función para pasar el control al siguiente middleware.
      */
+    // 1. Método original para el E-commerce (SSR con EJS)
     getDetail: (req, res, next) => {
-        // 1. Obtenemos el ID del producto desde los parámetros de la URL.
         const productId = req.params.id;
+        const product = productModel.findById(productId);
 
-        // 2. Usamos el servicio para buscar el producto por su ID.
-        const product = productService.getProductById(productId);
-
-        // 3. Escenario 2: Si el producto no se encuentra...
         if (!product) {
-            // Creamos un error con estado 404 y se lo pasamos al manejador de errores de app.js
             const error = new Error('¡Ups! Producto no encontrado.');
             error.status = 404;
             return next(error);
-        try {
-            // 1. Normalizamos y validamos el ID (Lanza 400 o 404 automáticamente si hay fallo)
-            const productId = productService.normalizeId(req.params.id);
-    
-            // 2. Obtenemos el producto (ya sabemos que existe gracias a la validación)
-            const product = productService.getProductById(productId);
-    
-            // 3. Renderizamos la vista de detalle
-            res.render('pages/productDetail', { product: product, isAuthPage: false });
-        } catch (error) {
-            next(error);
         }
-    }
-   },
+        // Devuelve la vista HTML ensamblada por el motor de plantillas
+        res.render('pages/productDetail', { product: product, isAuthPage: false });
+    },
 
+    // 2. NUEVO MÉTODO: Exclusivo para el Dashboard en React (CSR con JSON)
+    getDetailApi: (req, res) => {
+        const productId = req.params.id;
+        const product = productModel.findById(productId);
+
+        if (!product) {
+            return res.status(404).json({ mensaje: 'Producto no encontrado' });
+        }
+        // Devuelve los datos puros en formato JSON
+        res.status(200).json(product);
+    },
     // Método que renderiza la lista de productos
     listProducts: (req, res) => {
         // Atrapamos la variable 'sort' de la query string (la parte después del ? en la URL, por ejemplo: /products?sort=asc)
@@ -46,7 +43,7 @@ const productController = {
         const products = productService.getAllProducts(sortQuery);
 
         // Renderizamos la vista pasándole los productos ya ordenados
-        res.render('pages/product', { products: products });
+        res.json(products);
     },
 
     // Método para manejar la búsqueda de productos
