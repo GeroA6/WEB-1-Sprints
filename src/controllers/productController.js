@@ -9,30 +9,57 @@ const productController = {
      * @param {import('express').Response} res - El objeto de respuesta de Express.
      * @param {import('express').NextFunction} next - La función para pasar el control al siguiente middleware.
      */
-    // 1. Método original para el E-commerce (SSR con EJS)
+    // Método original para el E-commerce (SSR con EJS)
     getDetail: (req, res, next) => {
         const productId = req.params.id;
-        const product = productModel.findById(productId);
 
-        if (!product) {
-            const error = new Error('¡Ups! Producto no encontrado.');
-            error.status = 404;
-            return next(error);
+        try {
+            const product = productModel.findById(productId);
+
+            if (!product) {
+                const error = new Error('¡Ups! Producto no encontrado.');
+                error.status = 404;
+                return next(error);
+            }
+
+            
+            // Buscamos productos relacionados de la misma categoría, excluyendo el producto actual
+            let relacionados = [];
+            if (product.category) {
+                const todosDeCategoria = productModel.findByCategory(product.category);
+                relacionados = todosDeCategoria.filter(p => p.id !== product.id);
+            }
+
+            // Ahora enviamos 'relacionados' dentro del objeto a la vista EJS
+            res.render('pages/productDetail', { 
+                product: product, 
+                isAuthPage: false,
+                relacionados: relacionados // <- Aquí pasamos los productos relacionados a la vista
+            });
+            
+        } catch (error) {
+            console.error("Error crítico al renderizar la vista o consultar DB:", error);
+            next(error); 
         }
-        // Devuelve la vista HTML ensamblada por el motor de plantillas
-        res.render('pages/productDetail', { product: product, isAuthPage: false });
     },
 
-    // 2. NUEVO MÉTODO: Exclusivo para el Dashboard en React (CSR con JSON)
+    // 2. metodo para el Dashboard en React (CSR con JSON)
     getDetailApi: (req, res) => {
         const productId = req.params.id;
-        const product = productModel.findById(productId);
 
-        if (!product) {
-            return res.status(404).json({ mensaje: 'Producto no encontrado' });
+        try {
+            const product = productModel.findById(productId);
+
+            if (!product) {
+                return res.status(404).json({ mensaje: 'Producto no encontrado' });
+            }
+            // Devuelve los datos puros en formato JSON
+            res.status(200).json(product);
+        } catch (error) {
+            // Captura errores estrictos de SQLite
+            console.error("Error crítico en la API:", error);
+            res.status(500).json({ mensaje: "Error interno del servidor" });
         }
-        // Devuelve los datos puros en formato JSON
-        res.status(200).json(product);
     },
     // Método que renderiza la lista de productos
     listProducts: (req, res) => {
