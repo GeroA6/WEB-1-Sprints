@@ -81,9 +81,13 @@ app.use(userSessionMiddleware);
 
 // Importamos las rutas de la API
 const mainApiRoutes = require('./src/routes/api/mainApiRoutes');
+const productsApiRoutes = require('./src/routes/api/productsApiRoutes');
 
 // Definimos las rutas de la API bajo el prefijo '/api'
 app.use('/api', mainApiRoutes);
+
+// Importamos las rutas de la API
+app.use('/api/products', productsApiRoutes);
 
 // Importamos los archivos de rutas que creamos.
 const mainRoutes = require('./src/routes/mainRoutes');

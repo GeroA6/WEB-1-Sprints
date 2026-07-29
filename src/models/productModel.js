@@ -3,13 +3,13 @@ const db = require('../db/dataBase');
 
 const productModel = {
     // Busca todos y, si le llega la orden, los ordena directamente con SQL
-    findAll: function(sortQuery) {
+    findAll: function (sortQuery) {
         let query = `
             SELECT p.*, c.name as category 
             FROM products p 
             LEFT JOIN categories c ON p.category_id = c.id
         `;
-        
+
         // SQLite ordena directamente con ORDER BY
         if (sortQuery === 'asc') {
             query += ` ORDER BY p.price ASC`;
@@ -21,7 +21,7 @@ const productModel = {
     },
 
     // Busca uno solo por ID
-    findById: function(id) {
+    findById: function (id) {
         const query = `
             SELECT p.*, c.name as category 
             FROM products p 
@@ -32,7 +32,7 @@ const productModel = {
     },
 
     // Filtra por categoría directo en la base de datos
-    findByCategory: function(categoryName) {
+    findByCategory: function (categoryName) {
         const query = `
             SELECT p.*, c.name as category 
             FROM products p 
@@ -41,9 +41,9 @@ const productModel = {
         `;
         return db.prepare(query).all(categoryName);
     },
-  
+
     // Busca por nombre usando el comodín LIKE de SQL
-    searchByName: function(keyword) {
+    searchByName: function (keyword) {
         const query = `
             SELECT p.*, c.name as category 
             FROM products p 
@@ -55,21 +55,51 @@ const productModel = {
     },
 
     // Inserta un nuevo producto en la base de datos
-    create: function(productData) {
+    create: function (productData) {
         const query = `
             INSERT INTO products (name, description, price, stock, image)
             VALUES (?, ?, ?, ?, ?)
         `;
         // Usamos .run() porque es una acción de escritura (INSERT), no de lectura (GET/ALL)
         const info = db.prepare(query).run(
-            productData.name, 
-            productData.description, 
-            productData.price, 
-            productData.stock, 
+            productData.name,
+            productData.description,
+            productData.price,
+            productData.stock,
             productData.image
         );
-        
+
         return info; // Retorna información de la inserción, como el ID generado
+    },
+
+    // Actualiza un producto
+    update: function (id, productData) {
+        const query = `
+            UPDATE products 
+            SET name = ?, description = ?, price = ?, stock = ?, image = ?
+            WHERE id = ?
+        `;
+        const info = db.prepare(query).run(
+            productData.name,
+            productData.description,
+            productData.price,
+            productData.stock,
+            productData.image,
+            id
+        );
+
+        return info;
+    },
+
+    // Elimina un producto
+    delete: function (id) {
+        const query = `
+            DELETE FROM products 
+            WHERE id = ?
+        `;
+        const info = db.prepare(query).run(id);
+
+        return info;
     }
 
 };
