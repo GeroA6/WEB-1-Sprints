@@ -22,7 +22,7 @@ const productController = {
                 return next(error);
             }
 
-            
+
             // Buscamos productos relacionados de la misma categoría, excluyendo el producto actual
             let relacionados = [];
             if (product.category) {
@@ -31,52 +31,39 @@ const productController = {
             }
 
             // Ahora enviamos 'relacionados' dentro del objeto a la vista EJS
-            res.render('pages/productDetail', { 
-                product: product, 
+            res.render('pages/productDetail', {
+                product: product,
                 isAuthPage: false,
                 relacionados: relacionados // <- Aquí pasamos los productos relacionados a la vista
             });
-            
+
         } catch (error) {
             console.error("Error crítico al renderizar la vista o consultar DB:", error);
-            next(error); 
+            next(error);
         }
     },
 
-    // 2. metodo para el Dashboard en React (CSR con JSON)
-    getDetailApi: (req, res) => {
-        const productId = req.params.id;
-
-        try {
-            const product = productModel.findById(productId);
-
-            if (!product) {
-                return res.status(404).json({ mensaje: 'Producto no encontrado' });
-            }
-            // Devuelve los datos puros en formato JSON
-            res.status(200).json(product);
-        } catch (error) {
-            // Captura errores estrictos de SQLite
-            console.error("Error crítico en la API:", error);
-            res.status(500).json({ mensaje: "Error interno del servidor" });
-        }
-    },
     // Método que renderiza la lista de productos
     listProducts: (req, res) => {
         // Atrapamos la variable 'sort' de la query string (la parte después del ? en la URL, por ejemplo: /products?sort=asc)
-        const sortQuery = req.query.sort; 
+        const sortQuery = req.query.sort;
 
         // Le pedimos al servicio los productos, pasándole el criterio de orden
         const products = productService.getAllProducts(sortQuery);
 
         // Renderizamos la vista pasándole los productos ya ordenados
-        res.json(products);
+        res.render('pages/category', {
+            categoriaNombre: 'Todos los Productos',
+            productos: products,
+            isAuthPage: false
+        });
+
     },
 
     // Método para manejar la búsqueda de productos
     search: (req, res) => {
         // Atrapamos la palabra desde la URL (?query=...)
-        const searchQuery = req.query.query; 
+        const searchQuery = req.query.query;
         // Si no hay una consulta de búsqueda, simplemente renderizamos la vista sin resultados.
         let results = [];
 
@@ -86,9 +73,9 @@ const productController = {
 
         // Reutilizamos la vista de productos pasándole los resultados filtrados.
         // Si no hay resultados (results.length === 0), la vista EJS debería mostrar el mensaje amigable.
-        res.render('pages/product', { 
+        res.render('pages/product', {
             products: results,
-            searchQuery: searchQuery 
+            searchQuery: searchQuery
         });
     },
 
@@ -101,7 +88,7 @@ const productController = {
             const resultado = productModel.create(nuevoProducto);
 
             // Respondemos a React con código 200 (OK)
-            res.status(200).json({ 
+            res.status(200).json({
                 mensaje: "Producto guardado correctamente en SQLite",
                 id_generado: resultado.lastInsertRowid // SQLite devuelve el ID creado
             });
