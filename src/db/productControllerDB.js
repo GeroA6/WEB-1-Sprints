@@ -1,4 +1,4 @@
-const db = require('./dataBase');
+const db = require('./database');
 
 // Preparar las consultas SQLite
 const insertCategory = db.prepare(`INSERT OR IGNORE INTO categories (name) VALUES (?)`);

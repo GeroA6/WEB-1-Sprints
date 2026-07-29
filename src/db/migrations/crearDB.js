@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const db = require('../dataBase');
+const db = require('../database');
 
 function inicializarDB(){
     // leemos el archivo schema.sql

@@ -1,5 +1,4 @@
 // importamos el modelo para acceder a la base de datos
-const { createProduct } = require('../controllers/productController');
 const productModel = require('../models/productModel');
 
 const productsService = {
