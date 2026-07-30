@@ -7,6 +7,7 @@ const express = require('express');
 
 // Importamos el módulo 'cors' para permitir solicitudes de diferentes dominios esto nos servirá para el front 
 const cors = require('cors');
+
 // Importamos el módulo 'path' (nativo de Node.js) para manejar las rutas de las carpetas 
 // de forma segura, sin importar si usamos Windows, Mac o Linux.
 const path = require('path');
@@ -82,12 +83,12 @@ app.use(userSessionMiddleware);
 // Importamos las rutas de la API
 const mainApiRoutes = require('./src/routes/api/mainApiRoutes');
 const productsApiRoutes = require('./src/routes/api/productsApiRoutes');
+const categoriesApiRoutes = require('./src/routes/api/categoriesApiRoutes');
 
 // Definimos las rutas de la API bajo el prefijo '/api'
 app.use('/api', mainApiRoutes);
-
-// Importamos las rutas de la API
 app.use('/api/products', productsApiRoutes);
+app.use('/api/categories', categoriesApiRoutes);
 
 // Importamos los archivos de rutas que creamos.
 const mainRoutes = require('./src/routes/mainRoutes');
