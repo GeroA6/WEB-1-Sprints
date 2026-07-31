@@ -21,6 +21,8 @@ router.get('/register', mainController.getRegister);
 router.get('/search', mainController.getSearch);
 // Ruta dinámica para categorías: GET /categories/:category
 router.get('/categories/:category', mainController.getCategory);
+// Ruta GET para cerrar sesión
+router.get('/logout', mainController.logout);
 
 // --- DEFINICIÓN DE RUTAS POST ---
 // Esta ruta tiene 3 partes: la URL, un array de middlewares de validación, y el método del controlador.
@@ -47,6 +49,12 @@ router.post('/register', [
         return true; 
     })
 ], mainController.processRegister); // 3. Si todas las validaciones pasan, se ejecuta este método del controlador.
+
+// Ruta POST para procesar el Login
+router.post('/login', [
+    check('email').notEmpty().withMessage('El email es obligatorio.').isEmail().withMessage('Email inválido.'),
+    check('password').notEmpty().withMessage('La contraseña es obligatoria.')
+], mainController.processLogin);
 
 // Exportamos el router para usarlo en app.js
 module.exports = router;

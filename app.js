@@ -85,11 +85,13 @@ const mainApiRoutes = require('./src/routes/api/mainApiRoutes');
 const productsApiRoutes = require('./src/routes/api/productsApiRoutes');
 const categoriesApiRoutes = require('./src/routes/api/categoriesApiRoutes');
 const statsApiRoutes = require('./src/routes/api/statsApiRoutes');
+const usersApiRoutes = require('./src/routes/api/usersApiRoutes');
 // Definimos las rutas de la API bajo el prefijo '/api'
 app.use('/api', mainApiRoutes);
 app.use('/api/products', productsApiRoutes);
 app.use('/api/categories', categoriesApiRoutes);
 app.use('/api/stats', statsApiRoutes);
+app.use('/api/users', usersApiRoutes);
 // Importamos los archivos de rutas que creamos.
 const mainRoutes = require('./src/routes/mainRoutes');
 const productRoutes = require('./src/routes/productRoutes');

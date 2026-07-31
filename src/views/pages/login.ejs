@@ -1,10 +1,25 @@
 <%- include('../partials/global/head') %>
-<body>
-    <%- include('../partials/organisms/header') %>
-    <main>
-        <div class="box-form">
-            <%- include('../partials/organisms/login-form')  %>
-        </div>
-    </main>   
-    <%- include('../partials/organisms/footer') %>
-</body>
+
+    <body>
+        <%- include('../partials/organisms/header') %>
+            <main>
+                <div class="box-form">
+                    <% if (locals.errors && errors.length> 0) { %>
+                        <div
+                            style="background-color: #f8d7da; color: #721c24; padding: 1rem; margin: 1rem 0; width: 90%; max-width: 400px; border: 1px solid #f5c6cb; border-radius: .5rem;">
+                            <strong>Por favor, corrige los siguientes errores:</strong>
+                            <ul style="margin-top: 0.5rem; margin-left: 1rem; text-align: left;">
+                                <% errors.forEach(error=> { %>
+                                    <li>
+                                        <%= error.msg %>
+                                    </li>
+                                    <% }) %>
+                            </ul>
+                        </div>
+                        <% } %>
+
+                            <%- include('../partials/organisms/login-form') %>
+                </div>
+            </main>
+            <%- include('../partials/organisms/footer') %>
+    </body>

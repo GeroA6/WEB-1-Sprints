@@ -1,13 +1,11 @@
-<form class="form" action="/">
+<form class="form" action="/login" method="post">
     <h2 class="form-titulo">Inicia Sesión</h2>
-    <p class="form-texto">¿Aun no tienes una cuenta? <a href="./register" class="form-link">Entra aquí</a></p>
+    <p class="form-texto">¿Aún no tienes una cuenta? <a href="./register" class="form-link">Entra aquí</a></p>
     <div class="form-contenedor">
-        <%- include('../molecules/form-field', { etiqueta: 'Nombre Completo', tipo: 'text', id: 'nombre' }) %>
-
         <%- include('../molecules/form-field', { etiqueta: 'Correo Electrónico', tipo: 'email', id: 'email' }) %>
 
         <%- include('../molecules/form-field', { etiqueta: 'Contraseña', tipo: 'password', id: 'password' }) %>
     
-        <%- include('../atoms/form-button', {clase: 'form-submit', texto: 'Iniciar Seción'}) %>
+        <%- include('../atoms/form-button', {clase: 'form-submit', texto: 'Iniciar Sesión'}) %>
     </div>
 </form>
