@@ -14,7 +14,9 @@ const mainApiController = {
             data: {
                 version: "1.0.0",
                 endpoints: [
-                    "/api/products"
+                    "/api/products",
+                    "/api/categories",
+                    "/api/stats"
                 ]
             }
         });

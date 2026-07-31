@@ -100,8 +100,19 @@ const productModel = {
         const info = db.prepare(query).run(id);
 
         return info;
-    }
+    },
 
+    //Cuenta la cantidad de productos en la base de datos
+    count: function () {
+
+    const query = `
+        SELECT COUNT(*) AS total
+        FROM products
+    `;
+
+    return db.prepare(query).get().total;
+
+   }
 };
 
 module.exports = productModel;

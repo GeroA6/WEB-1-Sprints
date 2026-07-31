@@ -38,7 +38,19 @@ const categoryModel = {
     delete: function (id) {
         const query = `DELETE FROM categories WHERE id = ?`;
         return db.prepare(query).run(id);
-    }
+    },
+
+    // Contar la cantidad de categorias en la base de datos
+    count: function () {
+
+    const query = `
+        SELECT COUNT(*) AS total
+        FROM categories
+    `;
+
+    return db.prepare(query).get().total;
+
+},
 };
 
 module.exports = categoryModel;
