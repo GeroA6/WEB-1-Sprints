@@ -1,23 +1,22 @@
-<section class="section-productos">
-    <div class="contenedor-productos">
-        <div class="box-productos">
-          <%# Si la variable products existe y tiene al menos 1 producto, los dibujamos %>
-            <% if (locals.products && products.length > 0) { %>
-                
-                <% products.forEach(product => { %>
-                    <%- include('../molecules/product-card', { 
-                        link: '/products/' + product.id, 
-                        imgSrc: product.image ? '/img/' + product.image : '/img/default-product.png', 
-                        title: product.name, 
-                        puntos: product.price,
-                        stock: product.stock //
-                    }) %>
-                <% }) %>
-
-            <% } else { %>
-                <%# Si está vacío (ej: no hay productos relacionados), mostramos un mensaje amigable %>
-                <p style="text-align: center; width: 100%; color: #666;">No hay productos para mostrar en esta sección.</p>
-            <% } %>
-        </div>
-    </div>
-</section>
+<div class="box-productos">
+    <%# Si la variable products existe y tiene al menos 1 producto, los dibujamos %>
+    <% if (locals.products && products.length > 0) { %>
+        <% products.forEach(product => { %>
+            <% 
+                let imageSrc = '/img/default-product.png';
+                if (product.image) {
+                    imageSrc = product.image.startsWith('/') ? product.image : (product.image.startsWith('img/') ? '/' + product.image : '/img/' + product.image);
+                }
+            %>
+            <%- include('../molecules/product-card', { 
+                link: '/products/' + product.id, 
+                imgSrc: imageSrc, 
+                title: product.name, 
+                puntos: product.price,
+                stock: product.stock
+            }) %>
+        <% }) %>
+    <% } else { %>
+        <p style="text-align: center; width: 100%; color: var(--text-muted); padding: 2rem 0;">No hay productos para mostrar en esta sección.</p>
+    <% } %>
+</div>

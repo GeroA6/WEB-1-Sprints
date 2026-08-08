@@ -1,55 +1,42 @@
+<%- include('../partials/atoms/back-link', { textoVolver: 'Volver al Home' , categoria: productos.category
+    || 'Productos' }) %>
 
-<%- include('../partials/atoms/back-link', { 
-    textoVolver: 'Volver al Home', 
-    categoria: productos.category || 'Productos'
-}) %>
+    <div class="main">
+        <div class="container">
+            <%- include('../partials/molecules/product-gallery', { thumb1: producto.image ? '/img/' + producto.image
+                : '/img/producto-defoult.jpg' , thumb2: producto.image ? '/img/' + producto.image
+                : '/img/producto-defoult.jpg' , thumb3: producto.image ? '/img/' + producto.image
+                : '/img/producto-defoult.jpg' , mainImage: producto.image ? '/img/' + producto.image
+                : '/img/producto-defoult.jpg' })%>
 
-        <div class="main">
-            <div class="container">
-                <%- include('../partials/molecules/product-gallery', {
-                    thumb1: producto.image ? '/img/' + producto.image : '/img/producto-defoult.jpg',
-                    thumb2: producto.image ? '/img/' + producto.image : '/img/producto-defoult.jpg',
-                    thumb3: producto.image ? '/img/' + producto.image : '/img/producto-defoult.jpg',
-                    mainImage: producto.image ? '/img/' + producto.image : '/img/producto-defoult.jpg'
-                })%>
-                
-                
-                <%- include('../partials/molecules/product-description', {
-                    id: producto.id,
-                    title: producto.name,
-                    puntos: producto.price,
-                    descripcion: producto.description,
-                    stock: producto.stock
-                }) %>
-            </div>
+
+                <%- include('../partials/molecules/product-description', { id: producto.id, title: producto.name,
+                    puntos: producto.price, descripcion: producto.description, stock: producto.stock }) %>
         </div>
+    </div>
 
-        <section class= "section-relacionados" style="margin-top: 2rem;">
-            <div class= "contenedor-productos">
-                <h2> Productos Relacionados</h2>
+    <section class="section-relacionados" style="margin-top: 2rem;">
+        <div class="contenedor-productos">
+            <h2> Productos Relacionados</h2>
 
-                <% if (relacionados.length === 0) { %>
-                
-                    <div class="empty-state" style="text-align: center; padding: 2rem; color: #666;">
-                      <p>Por el momento no hay alternativas similares en esta categoría. ¡Sigue explorando nuestro catálogo!</p>
-                    </div>
+            <% if (relacionados.length===0) { %>
+
+                <div class="empty-state" style="text-align: center; padding: 2rem; color: #666;">
+                    <p>Por el momento no hay alternativas similares en esta categoría. ¡Sigue explorando nuestro
+                        catálogo!</p>
+                </div>
 
                 <% } else { %>
                     <div class="box-productos">
-                    <% relacionados.forEach(relacionado => { %>
+                        <% relacionados.forEach(relacionado=> { %>
 
-                        <%- include('../partials/molecules/product-card', {
-                            link: '/products/' + relacionado.id,
-                            imgSrc: relacionado.image ? '/img/products/' + relacionado.image : '/img/producto-defoult.jpg',
-                            title: relacionado.name,
-                            puntos: relacionado.price,
-                            stock: relacionado.stock
-                        }) %>
-                    <% }) %>
-            </div>
-                <% } %>
-        </section>
-        <%- include('../partials/organisms/list-products')%>
+                            <%- include('../partials/molecules/product-card', { link: '/products/' + relacionado.id,
+                                imgSrc: relacionado.image ? '/img/products/' + relacionado.image
+                                : '/img/producto-defoult.jpg' , title: relacionado.name, puntos: relacionado.price,
+                                stock: relacionado.stock }) %>
+                                <% }) %>
+                    </div>
+                    <% } %>
+    </section>
+    <%- include('../partials/organisms/list-products')%>
         <%- include('../partials/organisms/nav-bar')%>
-    
-    

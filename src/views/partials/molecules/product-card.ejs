@@ -1,19 +1,19 @@
-<a href="<%= locals.link || '#' %>">
-    <div class="producto">
-        <div class="imagen">
-            <img src="<%= imgSrc %>" alt="">
+<a href="<%= locals.link || '#' %>" class="card-producto-link" aria-label="<%= title %>">
+    <article class="producto-card">
+        <div class="producto-imagen-box">
+            <img src="<%= imgSrc %>" alt="<%= title %>" loading="lazy">
         </div>
-        <div class="box-detalles">
-            <h3 class="producto-titulo"><%- title %></h3>
-            <hr>
-            <div class="producto-detalles">
-                <h3><%= puntos %></h3>
-                <p>PUNTOS</p>
-                 <% if (locals.stock === 0) { %>
-                <div class="badge-sin-stock" style="background-color: #ff4d4f; color: white; text-align: center; padding: 4px; border-radius: 4px; margin-top: 10px; font-weight: bold;">Sin stock</div>
-            <% } %>
+        <div class="producto-info-box">
+            <h3 class="producto-titulo-ml"><%- title %></h3>
+            <div class="producto-precio-box">
+                <span class="producto-precio">$<%= puntos %></span>
+                <span class="producto-puntos-label">PUNTOS</span>
             </div>
-           
+            <% if (locals.stock > 0) { %>
+                <span class="badge-envio-gratis">Envío gratis</span>
+            <% } else { %>
+                <span class="badge-sin-stock-ml">Sin stock</span>
+            <% } %>
         </div>
-    </div>
+    </article>
 </a>

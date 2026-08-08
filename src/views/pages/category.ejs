@@ -9,31 +9,21 @@
             categoria: '/'
         }) %>
 
-        <div class="main">
-            <div class="container" style="padding: 2rem 0;">
-                <h1 style="text-transform: capitalize; margin-bottom: 2rem; font-size: 1.2rem; text-align: center;">
+        <section class="section-productos">
+            <div class="contenedor-productos">
+                <h1 style="text-transform: capitalize; margin-bottom: 1.5rem; font-size: 1.5rem;">
                     Categoría: <%= categoriaNombre %>
                 </h1>
                 
                 <% if (productos.length === 0) { %>
-                    <div class="empty-state" style="text-align: center; padding: 4rem 2rem; background-color: #f9f9f9; border-radius: 8px;">
-                        <p style="font-size: 1.2rem; color: #666;">No encontramos productos para esta categoría por el momento. ¡Pronto subiremos novedades!</p>
+                    <div class="empty-state" style="text-align: center; padding: 4rem 2rem; background-color: var(--surface); border-radius: var(--radius-md);">
+                        <p style="font-size: 1.2rem; color: var(--text-muted);">No encontramos productos para esta categoría por el momento. ¡Pronto subiremos novedades!</p>
                     </div>
                 <% } else { %>
-                    <div class="box-productos">
-                        <% productos.forEach(producto => { %>
-                            <%- include('../partials/molecules/product-card', {
-                                link: '/products/' + producto.id,
-                                imgSrc: producto.image ? '/img/' + producto.image : '/img/default-product.png',
-                                title: producto.name,
-                                puntos: producto.price,
-                                stock: producto.stock 
-                            }) %>
-                        <% }) %>
-                    </div>
+                    <%- include('../partials/organisms/list-products', { products: productos }) %>
                 <% } %>
             </div>
-        </div>
+        </section>
     </main>
     <%- include('../partials/organisms/footer') %>
 </body>
