@@ -15,6 +15,11 @@
             </form>
 
             <div class="box-icons">
+                <div class="icon theme-toggle-container" title="Cambiar tema">
+                    <button type="button" id="theme-toggle-btn" class="theme-icon-btn" aria-label="Cambiar modo oscuro/claro">
+                        <i id="theme-toggle-icon" class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
                 <div class="icon">
                     <a href="/cart" class="fa-solid fa-cart-shopping"></a>
                     <% if (locals.cartCount && locals.cartCount > 0) { %>
@@ -27,6 +32,42 @@
                     </a>
                 </div>
             </div>
+        <% } else { %>
+            <div class="box-icons" style="justify-content: flex-end;">
+                <div class="icon theme-toggle-container" title="Cambiar tema">
+                    <button type="button" id="theme-toggle-btn" class="theme-icon-btn" aria-label="Cambiar modo oscuro/claro">
+                        <i id="theme-toggle-icon" class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </div>
         <% } %>
     </div>
+    <script>
+        (function() {
+            var btn = document.getElementById('theme-toggle-btn');
+            var icon = document.getElementById('theme-toggle-icon');
+            if (!btn || !icon) return;
+
+            function updateIcon() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                if (current === 'dark') {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            }
+
+            updateIcon();
+
+            btn.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('negratone_theme', next);
+                updateIcon();
+            });
+        })();
+    </script>
 </header>
