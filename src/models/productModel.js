@@ -56,6 +56,22 @@ const productModel = {
 
     // Inserta un nuevo producto en la base de datos
     create: function (productData) {
+        if (productData.category_id) {
+            const query = `
+                INSERT INTO products (name, description, price, stock, image, category_id)
+                VALUES (?, ?, ?, ?, ?, ?)
+            `;
+            const info = db.prepare(query).run(
+                productData.name,
+                productData.description,
+                productData.price,
+                productData.stock,
+                productData.image,
+                productData.category_id
+            );
+            return info;
+        }
+
         const query = `
             INSERT INTO products (name, description, price, stock, image)
             VALUES (?, ?, ?, ?, ?)
@@ -74,6 +90,24 @@ const productModel = {
 
     // Actualiza un producto
     update: function (id, productData) {
+        if (productData.category_id) {
+            const query = `
+                UPDATE products 
+                SET name = ?, description = ?, price = ?, stock = ?, image = ?, category_id = ?
+                WHERE id = ?
+            `;
+            const info = db.prepare(query).run(
+                productData.name,
+                productData.description,
+                productData.price,
+                productData.stock,
+                productData.image,
+                productData.category_id,
+                id
+            );
+            return info;
+        }
+
         const query = `
             UPDATE products 
             SET name = ?, description = ?, price = ?, stock = ?, image = ?
@@ -105,14 +139,14 @@ const productModel = {
     //Cuenta la cantidad de productos en la base de datos
     count: function () {
 
-    const query = `
+        const query = `
         SELECT COUNT(*) AS total
         FROM products
     `;
 
-    return db.prepare(query).get().total;
+        return db.prepare(query).get().total;
 
-   }
+    }
 };
 
 module.exports = productModel;

@@ -13,6 +13,19 @@
     --shadow-hover: 0 10px 20px -3px rgba(0, 0, 0, 0.08);
 }
 
+[data-theme="dark"] {
+    --primary: #22c55e;
+    --primary-hover: #16a34a;
+    --primary-light: #152e22;
+    --bg-body: #111827;
+    --surface: #1f2937;
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --border-color: #374151;
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    --shadow-hover: 0 10px 25px -3px rgba(0, 0, 0, 0.7);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -1328,4 +1341,199 @@ footer {
     }
 
     /* fin sección checkout */
+}
+
+/* =========================================
+   BOTÓN Y ESTILOS DE MODO OSCURO (EJS STOREFRONT)
+   ========================================= */
+.theme-icon-btn {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem;
+    outline: none;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.theme-icon-btn:hover {
+    color: #92f388;
+    transform: scale(1.15);
+}
+
+[data-theme="dark"] body {
+    background-color: var(--bg-body) !important;
+    color: var(--text-main) !important;
+}
+
+/* Header y Barra de Navegación */
+[data-theme="dark"] .header-nav {
+    background-color: var(--surface) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .header-nav a,
+[data-theme="dark"] .top-a,
+[data-theme="dark"] .perfil-a,
+[data-theme="dark"] .perfil-logo {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .header-search input {
+    background-color: var(--bg-body) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .header-search i,
+[data-theme="dark"] .header-search button {
+    color: var(--text-muted) !important;
+}
+
+/* Tarjetas de Producto (Home, Search, Categorías) */
+[data-theme="dark"] .producto,
+[data-theme="dark"] .producto-card {
+    background-color: var(--surface) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-card) !important;
+}
+
+[data-theme="dark"] .producto h3,
+[data-theme="dark"] .producto p,
+[data-theme="dark"] .producto-titulo,
+[data-theme="dark"] .producto-titulo-ml,
+[data-theme="dark"] .producto-precio,
+[data-theme="dark"] .box-detalles,
+[data-theme="dark"] .box-detalles h3,
+[data-theme="dark"] .box-detalles p {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .producto-info-box {
+    background-color: var(--surface) !important;
+}
+
+[data-theme="dark"] .select-orden {
+    background-color: var(--surface) !important;
+    color: var(--text-main) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] .producto-imagen-box,
+[data-theme="dark"] .main-img-container {
+    background-color: #1a2332 !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Footer */
+[data-theme="dark"] footer,
+[data-theme="dark"] .footer-nav {
+    background-color: var(--surface) !important;
+    color: var(--text-main) !important;
+    border-top: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .footer-nav a {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="dark"] .footer-left a {
+    color: #ffffff !important;
+    background-color: var(--primary) !important;
+}
+
+/* Detalle de Producto */
+[data-theme="dark"] .producto-photos,
+[data-theme="dark"] .producto-descripcion {
+    background-color: var(--surface) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-card) !important;
+}
+
+[data-theme="dark"] .producto-descripcion p,
+[data-theme="dark"] .producto-descripcion h2,
+[data-theme="dark"] .producto-descripcion h3,
+[data-theme="dark"] .puntos h3,
+[data-theme="dark"] .puntos p {
+    color: var(--text-main) !important;
+}
+
+/* Carrito y Checkout */
+[data-theme="dark"] .carrito-producto,
+[data-theme="dark"] .container-carrito,
+[data-theme="dark"] .checkout__form,
+[data-theme="dark"] .checkout__aside {
+    background-color: var(--surface) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-card) !important;
+}
+
+[data-theme="dark"] .producto-left h3,
+[data-theme="dark"] .producto-left p,
+[data-theme="dark"] .carrito-end h3,
+[data-theme="dark"] .checkout__form h2,
+[data-theme="dark"] .checkout__aside h2,
+[data-theme="dark"] .articulo__datos label,
+[data-theme="dark"] .articulo__datos p {
+    color: var(--text-main) !important;
+}
+
+/* Formularios de Login, Register y Perfil */
+[data-theme="dark"] .form,
+[data-theme="dark"] .perfil {
+    background-color: var(--surface) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--shadow-card) !important;
+}
+
+[data-theme="dark"] .form-titulo,
+[data-theme="dark"] .form-texto,
+[data-theme="dark"] .form-link {
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] select,
+[data-theme="dark"] textarea,
+[data-theme="dark"] .articulo__input {
+    background-color: var(--bg-body) !important;
+    color: var(--text-main) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+/* Tarjetas de Publicidad */
+[data-theme="dark"] .img-box {
+    background-color: rgba(31, 41, 55, 0.9) !important;
+    color: var(--text-main) !important;
+}
+
+[data-theme="dark"] .img-box img {
+    background-color: var(--bg-body) !important;
+}
+
+[data-theme="dark"] .img-box h3,
+[data-theme="dark"] .img-box p {
+    color: var(--text-main) !important;
+}
+
+/* Títulos y Textos */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] p,
+[data-theme="dark"] label {
+    color: var(--text-main) !important;
 }
