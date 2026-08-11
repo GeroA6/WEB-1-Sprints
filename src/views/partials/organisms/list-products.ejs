@@ -2,15 +2,9 @@
     <%# Si la variable products existe y tiene al menos 1 producto, los dibujamos %>
     <% if (locals.products && products.length > 0) { %>
         <% products.forEach(product => { %>
-            <% 
-                let imageSrc = '/img/default-product.png';
-                if (product.image) {
-                    imageSrc = product.image.startsWith('/') ? product.image : (product.image.startsWith('img/') ? '/' + product.image : '/img/' + product.image);
-                }
-            %>
             <%- include('../molecules/product-card', { 
                 link: '/products/' + product.id, 
-                imgSrc: imageSrc, 
+                imgSrc: formatImgUrl(product.image), 
                 title: product.name, 
                 puntos: product.price,
                 stock: product.stock

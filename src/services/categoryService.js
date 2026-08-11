@@ -33,12 +33,12 @@ const categoryService = {
             throw error;
         };
 
-        const trimmedName = data.name.trim().toLowerCase();
+        const trimmedName = data.name.trim();
 
         // validar que la categoría no exista ya en la base de datos
         const existing = categoryModel.findByName(trimmedName);
         if (existing) {
-            const error = new Error(`La categoria "${trimmedName} ya existe.`);
+            const error = new Error(`La categoria "${trimmedName}" ya existe.`);
             error.status = 400;
             throw error;
         };

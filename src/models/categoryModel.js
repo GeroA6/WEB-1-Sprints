@@ -23,14 +23,14 @@ const categoryModel = {
 
     // Crear una nueva categoria
     create: function (name) {
-        const query = `INSERT INTO categories (name) VALUES (LOWER(?))`;
+        const query = `INSERT INTO categories (name) VALUES (?)`;
         // .run() devuelve la informacion de la operacion, incluyendo lastInsertRowid
         return db.prepare(query).run(name);
     },
 
     // Actualizar una categoria
     update: function (id, name) {
-        const query = `UPDATE categories SET name = LOWER(?) WHERE id = ?`;
+        const query = `UPDATE categories SET name = ? WHERE id = ?`;
         return db.prepare(query).run(name, id);
     },
 

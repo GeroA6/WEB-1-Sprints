@@ -7,12 +7,12 @@
                     <div class="main">
                         <div class="container">
                             <%# Como el objeto de producto solo tiene una imagen, la usaremos para toda la galería. %>
-                                <%# También aplicamos la lógica de la imagen por defecto aquí. %>
-                                    <%- include('../partials/molecules/product-gallery', { thumb1: product.image
-                                        ? '/img/' + product.image : '/img/default-product.png' , thumb2: product.image
-                                        ? '/img/' + product.image : '/img/default-product.png' , thumb3: product.image
-                                        ? '/img/' + product.image : '/img/default-product.png' , mainImage:
-                                        product.image ? '/img/' + product.image : '/img/default-product.png' }) %>
+                            <%- include('../partials/molecules/product-gallery', { 
+                                thumb1: formatImgUrl(product.image), 
+                                thumb2: formatImgUrl(product.image), 
+                                thumb3: formatImgUrl(product.image), 
+                                mainImage: formatImgUrl(product.image) 
+                            }) %>
 
                                         <%- include('../partials/molecules/product-description', { id: product.id,
                                             title: product.name, puntos: product.price, descripcion:

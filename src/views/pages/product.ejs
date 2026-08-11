@@ -3,12 +3,12 @@
 
     <div class="main">
         <div class="container">
-            <%- include('../partials/molecules/product-gallery', { thumb1: producto.image ? '/img/' + producto.image
-                : '/img/producto-defoult.jpg' , thumb2: producto.image ? '/img/' + producto.image
-                : '/img/producto-defoult.jpg' , thumb3: producto.image ? '/img/' + producto.image
-                : '/img/producto-defoult.jpg' , mainImage: producto.image ? '/img/' + producto.image
-                : '/img/producto-defoult.jpg' })%>
-
+            <%- include('../partials/molecules/product-gallery', { 
+                thumb1: formatImgUrl(producto.image), 
+                thumb2: formatImgUrl(producto.image), 
+                thumb3: formatImgUrl(producto.image), 
+                mainImage: formatImgUrl(producto.image) 
+            }) %>
 
                 <%- include('../partials/molecules/product-description', { id: producto.id, title: producto.name,
                     puntos: producto.price, descripcion: producto.description, stock: producto.stock }) %>
@@ -31,8 +31,8 @@
                         <% relacionados.forEach(relacionado=> { %>
 
                             <%- include('../partials/molecules/product-card', { link: '/products/' + relacionado.id,
-                                imgSrc: relacionado.image ? '/img/products/' + relacionado.image
-                                : '/img/producto-defoult.jpg' , title: relacionado.name, puntos: relacionado.price,
+                                imgSrc: formatImgUrl(relacionado.image), 
+                                title: relacionado.name, puntos: relacionado.price,
                                 stock: relacionado.stock }) %>
                                 <% }) %>
                     </div>

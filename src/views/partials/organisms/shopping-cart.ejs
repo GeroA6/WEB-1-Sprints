@@ -20,7 +20,7 @@
             <% cart.forEach(item => { %>
                 <%- include('../molecules/cart-item', { 
                     id: item.id,
-                    imgSrc: item.image ? '/img/' + item.image : '/img/default-product.png', 
+                    imgSrc: formatImgUrl(item.image), 
                     title: item.name, 
                     price: item.price,
                     quantity: item.quantity
