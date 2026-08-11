@@ -25,6 +25,7 @@ router.get('/categories/:category', mainController.getCategory);
 router.get('/logout', mainController.logout);
 
 // --- DEFINICIÓN DE RUTAS POST ---
+router.post('/checkout/pay', mainController.postCheckoutPay);
 // Esta ruta tiene 3 partes: la URL, un array de middlewares de validación, y el método del controlador.
 router.post('/register', [
     // 1. Middleware de SANITIZACIÓN: Limpia los datos ANTES de validar.

@@ -1537,3 +1537,267 @@ footer {
 [data-theme="dark"] label {
     color: var(--text-main) !important;
 }
+
+/* =========================================
+   ESTILOS DE PASARELA DE PAGO (CHECKOUT DEMO)
+   ========================================= */
+.checkout-page-container {
+    max-width: 1050px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.checkout-demo-banner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.demo-banner-icon {
+    font-size: 1.8rem;
+    color: #f59e0b;
+    flex-shrink: 0;
+}
+
+.demo-banner-text h4 {
+    color: #d97706;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+[data-theme="dark"] .demo-banner-text h4 {
+    color: #fcd34d !important;
+}
+
+.demo-banner-text p {
+    font-size: 0.85rem;
+    color: var(--text-main);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+@media (max-width: 860px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.checkout-card-section,
+.checkout-summary-card {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+}
+
+.section-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.6rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+    min-width: 140px;
+}
+
+.form-field.full-width {
+    flex: 1 1 100%;
+}
+
+.form-field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.form-field input {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-body);
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-field input:focus {
+    outline: none;
+    border-color: var(--primary-brand, #1ea811);
+    box-shadow: 0 0 0 3px rgba(30, 168, 17, 0.15);
+}
+
+.payment-tabs-demo {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.payment-tab {
+    padding: 0.6rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 600;
+    border: 1px solid var(--primary-brand, #1ea811);
+    background: rgba(30, 168, 17, 0.08);
+    color: var(--primary-brand, #1ea811);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* Resumen Lateral */
+.summary-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.6rem;
+}
+
+.summary-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.summary-item-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.summary-item-img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-body);
+}
+
+.summary-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.summary-item-info h4 {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+}
+
+.summary-item-qty {
+    font-size: 0.78rem;
+    color: var(--text-muted, #777);
+}
+
+.summary-item-price {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+.summary-subtotals {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.subtotal-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--text-main);
+}
+
+.summary-total-final {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.summary-total-final span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.summary-total-final h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-brand, #1ea811);
+    margin: 0;
+}
+
+.security-badge-box {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.8rem;
+    font-size: 0.75rem;
+    color: var(--text-muted, #666);
+}
+
+[data-theme="dark"] .security-badge-box {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+/* Pantallas de Estado */
+.checkout-success-box,
+.checkout-empty-box {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 3rem 1.5rem;
+    text-align: center;
+    max-width: 600px;
+    margin: 2rem auto;
+    box-shadow: var(--shadow-card);
+}
+
+.success-icon-circle {
+    font-size: 3.5rem;
+    color: var(--primary-brand, #1ea811);
+    margin-bottom: 1rem;
+}

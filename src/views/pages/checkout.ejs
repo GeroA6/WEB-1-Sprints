@@ -1,23 +1,184 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Próximamente</title>
-    <!-- Puedes enlazar tu archivo CSS aquí si ya tienes estilos de botones globales -->
-</head>
+<%- include('../partials/global/head') %>
 <body>
-    <!-- Estructura simple para mostrar el mensaje amigable -->
-    <main style="text-align: center; margin-top: 100px; font-family: Arial, sans-serif;">
-        
-        <h1>Checkout disponible en el próximo sprint</h1>
-        
-        <div style="margin-top: 30px;">
-            <!-- Botón 1: Volver al carrito -->
-            <a href="/cart" style="display: inline-block; padding: 10px 20px; margin: 0 10px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">Volver al carrito</a>
-            <!-- Botón 2: Volver al inicio -->
-            <a href="/" style="display: inline-block; padding: 10px 20px; margin: 0 10px; background-color: #6C757D; color: white; text-decoration: none; border-radius: 5px;">Volver al inicio</a>
+    <%- include('../partials/organisms/header') %>
+
+    <main class="main" style="padding: 1.5rem 1rem;">
+        <div class="checkout-page-container">
+            
+            <a class="top-a" href="/cart" style="padding: 0 0 1rem 0; width: 100%; max-width: 280px;">
+                <i class="fa-solid fa-arrow-left"></i>
+                <p>Volver al Carrito</p>
+                <i class="fa-solid fa-caret-right"></i>
+                <p>Pago Seguro</p>
+            </a>
+
+            <!-- BANNER DE ADVERTENCIA: MODO DEMO -->
+            <div class="checkout-demo-banner">
+                <div class="demo-banner-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="demo-banner-text">
+                    <h4>Pasarela de Pago en Demostración</h4>
+                    <p>Esta es una versión de prueba visual. La integración con pasarelas de pago reales (como Mercado Pago o Stripe) está proyectada para una mejora a futuro. Los datos ingresados no realizarán ningún cobro real.</p>
+                </div>
+            </div>
+
+            <% if (paidSuccess) { %>
+                <!-- PANTALLA DE ÉXITO TRAS CONFIRMAR PAGO DEMO -->
+                <div class="checkout-success-box">
+                    <div class="success-icon-circle">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h2>¡Pago de Prueba Simulado con Éxito!</h2>
+                    <p>Muchas gracias por probar la experiencia de compra en Negratone. El pedido fue procesado de forma simulada y el carrito ha sido vaciado.</p>
+                    <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="/" class="boton-end" style="background-color: var(--primary-brand, #1ea811); color: #fff;">Volver a la Tienda</a>
+                    </div>
+                </div>
+
+            <% } else if (!cart || cart.length === 0) { %>
+                <!-- CARRITO VACÍO -->
+                <div class="checkout-empty-box">
+                    <i class="fa-solid fa-cart-shopping" style="font-size: 3rem; color: var(--text-muted, #9ca3af); margin-bottom: 1rem;"></i>
+                    <h3>No tienes productos en tu carrito</h3>
+                    <p style="color: var(--text-muted, #666); margin: 0.5rem 0 1.5rem 0;">Agrega artículos desde la tienda antes de proceder a la pasarela de pago.</p>
+                    <a href="/" class="boton-end">Explorar Productos</a>
+                </div>
+
+            <% } else { %>
+                <!-- GRILLA PRINCIPAL DE CHECKOUT -->
+                <div class="checkout-grid">
+                    
+                    <!-- FORMULARIO DE DATOS DE PAGO Y ENVÍO -->
+                    <div class="checkout-form-column">
+                        <form action="/checkout/pay" method="POST" id="demoCheckoutForm">
+                            
+                            <!-- SECCIÓN 1: DATOS DE ENVÍO -->
+                            <div class="checkout-card-section">
+                                <h3 class="section-title"><i class="fa-solid fa-truck-fast"></i> 1. Datos de Envío</h3>
+                                <div class="form-row">
+                                    <div class="form-field full-width">
+                                        <label>Nombre y Apellido *</label>
+                                        <input type="text" name="nombre" placeholder="Ej: Juan Pérez" required />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-field full-width">
+                                        <label>Email de Contacto *</label>
+                                        <input type="email" name="email" placeholder="juan@ejemplo.com" required />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-field" style="flex: 2;">
+                                        <label>Dirección de Entrega *</label>
+                                        <input type="text" name="direccion" placeholder="Calle Falsa 123" required />
+                                    </div>
+                                    <div class="form-field" style="flex: 1;">
+                                        <label>Código Postal *</label>
+                                        <input type="text" name="cp" placeholder="1425" required />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SECCIÓN 2: DATOS DE PAGO SIMULADO -->
+                            <div class="checkout-card-section" style="margin-top: 1.25rem;">
+                                <h3 class="section-title"><i class="fa-solid fa-credit-card"></i> 2. Método de Pago (Simulación)</h3>
+                                
+                                <div class="payment-tabs-demo">
+                                    <div class="payment-tab active">
+                                        <i class="fa-solid fa-credit-card"></i> Tarjeta de Crédito / Débito (Demo)
+                                    </div>
+                                </div>
+
+                                <div class="form-row" style="margin-top: 1rem;">
+                                    <div class="form-field full-width">
+                                        <label>Titular de la Tarjeta</label>
+                                        <input type="text" name="titular" placeholder="COMO FIGURA EN LA TARJETA" />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-field full-width">
+                                        <label>Número de Tarjeta (Ficticio)</label>
+                                        <input type="text" name="numeroTarjeta" placeholder="4500 •••• •••• 1234" maxlength="19" />
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-field">
+                                        <label>Vencimiento</label>
+                                        <input type="text" name="vencimiento" placeholder="MM/AA" maxlength="5" />
+                                    </div>
+                                    <div class="form-field">
+                                        <label>Código de Seguridad</label>
+                                        <input type="password" name="cvv" placeholder="•••" maxlength="4" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- BOTÓN DE CONFIRMACIÓN -->
+                            <div style="margin-top: 1.5rem;">
+                                <button type="submit" class="boton-end" style="width: 100%; font-size: 1.1rem; padding: 1rem; border: none; cursor: pointer;">
+                                    🔒 Confirmar Pago de Prueba ($<%= total %>)
+                                </button>
+                                <small style="display: block; text-align: center; margin-top: 0.5rem; color: var(--text-muted, #777);">
+                                    Ambiente de prueba seguro • No se debitará dinero
+                                </small>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- RESUMEN LATERAL DE COMPRA -->
+                    <div class="checkout-summary-column">
+                        <div class="checkout-summary-card">
+                            <h3 class="summary-title">Resumen del Carrito</h3>
+                            
+                            <div class="summary-items-list">
+                                <% cart.forEach(item => { %>
+                                    <div class="summary-item-row">
+                                        <img src="<%= item.image ? (item.image.startsWith('data:') || item.image.startsWith('http') ? item.image : '/img/' + item.image) : '/img/default-product.png' %>" alt="<%= item.name %>" class="summary-item-img" />
+                                        <div class="summary-item-info">
+                                            <h4><%= item.name %></h4>
+                                            <span class="summary-item-qty">Cantidad: <%= item.quantity %></span>
+                                        </div>
+                                        <span class="summary-item-price">$<%= item.subtotal %></span>
+                                    </div>
+                                <% }) %>
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid var(--border-color, #e5e7eb); margin: 1rem 0;" />
+
+                            <div class="summary-subtotals">
+                                <div class="subtotal-row">
+                                    <span>Subtotal</span>
+                                    <span>$<%= total %></span>
+                                </div>
+                                <div class="subtotal-row">
+                                    <span>Costo de Envío</span>
+                                    <span style="color: var(--primary-brand, #1ea811); font-weight: 600;">¡Gratis!</span>
+                                </div>
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid var(--border-color, #e5e7eb); margin: 1rem 0;" />
+
+                            <div class="summary-total-final">
+                                <span>Total a Pagar</span>
+                                <h2>$<%= total %></h2>
+                            </div>
+
+                            <div class="security-badge-box">
+                                <i class="fa-solid fa-lock"></i>
+                                <span>Transacción simulada con encriptación SSL de 256 bits</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            <% } %>
+
         </div>
     </main>
+
+    <%- include('../partials/organisms/footer') %>
 </body>
 </html>

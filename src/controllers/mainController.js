@@ -26,7 +26,24 @@ const mainController = {
         res.render("pages/index", { isAuthPage: false, sugeridos: sugeridos, masPedidos: masPedidos, products: productsData, sortQuery: sortQuery }); //array a la vista
     },
     getCheckout: (req, res) => {
-        res.render("pages/checkout", { isAuthPage: false });
+        const cartService = require('../services/cartService');
+        const { cartWithDetails, total } = cartService.getCartDetails(req.session);
+        res.render("pages/checkout", { 
+            isAuthPage: false, 
+            cart: cartWithDetails, 
+            total: total,
+            paidSuccess: false 
+        });
+    },
+    postCheckoutPay: (req, res) => {
+        const cartService = require('../services/cartService');
+        cartService.clearCart(req.session);
+        res.render("pages/checkout", { 
+            isAuthPage: false, 
+            cart: [], 
+            total: 0,
+            paidSuccess: true 
+        });
     },
     getLogin: (req, res) => {
         res.render("pages/login", { isAuthPage: true, errors: [], oldData: {} });
