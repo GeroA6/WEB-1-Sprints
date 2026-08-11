@@ -1,4 +1,6 @@
-<li class="box-nav <%= locals.position || '' %>">
-    <i class="<%= icon %>"></i>
-    <a href="<%= locals.link || '#' %>"><%= text %></a>
+<li class="nav-item-wrapper <%= locals.position || '' %>">
+    <a href="<%= locals.link || '#' %>" class="box-nav <%= locals.position || '' %>">
+        <i class="<%= icon %>"></i>
+        <span><%= text %></span>
+    </a>
 </li>

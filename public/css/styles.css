@@ -346,6 +346,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    list-style: none;
 }
 
 .nav-pagina hr {
@@ -354,14 +355,22 @@ main {
     opacity: 60%;
 }
 
+.nav-pagina ul li {
+    list-style: none;
+}
+
 .box-nav {
     width: 7rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: .4rem;
     padding: 1rem 0;
     cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    transition: background-color 0.3s;
 }
 
 .left {
@@ -374,7 +383,6 @@ main {
 
 .box-nav:hover {
     background-color: #1ea811;
-    transition: 0.3s;
 }
 
 .box-nav:focus {
@@ -386,15 +394,11 @@ main {
     font-size: 1.6rem;
 }
 
-.box-nav li {
-    list-style: none;
-}
-
-.nav-pagina ul li a {
+.box-nav span {
     color: #fff;
     letter-spacing: 1px;
-    text-decoration: none;
     font-size: 0.8rem;
+    text-decoration: none;
 }
 
 /* fin - sección del nav*/
@@ -772,7 +776,7 @@ main {
 .main-img-container {
     width: 100%;
     aspect-ratio: 1 / 1;
-    background-color: #f8fafc;
+    background-color: var(--surface);
     border-radius: var(--radius-sm);
     display: flex;
     justify-content: center;
@@ -788,7 +792,6 @@ main {
     width: auto;
     height: auto;
     object-fit: contain;
-    mix-blend-mode: multiply;
 }
 
 .producto-descripcion {
