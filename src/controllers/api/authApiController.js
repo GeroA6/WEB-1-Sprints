@@ -21,12 +21,20 @@ const authApiController = {
             // Validar credenciales usando userService (verifica bcrypt)
             const user = userService.loginUser(email, password);
 
+            // Verificar si el usuario tiene rol de administrador para acceder al panel
+            if (user.role && user.role !== 'admin') {
+                return res.status(403).json({
+                    error: 'Acceso denegado. Tu cuenta no tiene permisos de administrador para acceder al panel de control.'
+                });
+            }
+
             // Generar el Token JWT con payload y tiempo de expiración
             const token = jwt.sign(
                 {
                     id: user.id,
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    role: user.role || 'admin'
                 },
                 JWT_SECRET,
                 { expiresIn: '8h' }
@@ -38,7 +46,8 @@ const authApiController = {
                 user: {
                     id: user.id,
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    role: user.role || 'admin'
                 }
             });
         } catch (error) {

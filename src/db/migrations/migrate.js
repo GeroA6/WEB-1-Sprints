@@ -63,6 +63,17 @@ try {
 
     //invoco la función de migración con el array de productos que leí del JSON.
     migrate(products);
+
+    // Sembrar administrador por defecto si no existe
+    const bcrypt = require('bcryptjs');
+    const existingAdmin = db.prepare('SELECT id FROM users WHERE email = ?').get('admin@negratone.com');
+    if (!existingAdmin) {
+        const hash = bcrypt.hashSync('admin12345', 10);
+        db.prepare(`INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)`)
+          .run('Admin Negratone', 'admin@negratone.com', hash, 'admin');
+        console.log("Usuario Administrador padre inicializado con éxito (admin@negratone.com / admin12345).");
+    }
+
     console.log("Migración completada con éxito");
 
 } catch (error) {
