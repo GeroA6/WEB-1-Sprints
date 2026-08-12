@@ -1,136 +1,81 @@
-// ========================================================================
-// 1. IMPORTACIÓN DE HERRAMIENTAS (DEPENDENCIAS)
-// ========================================================================
-
-// Importamos el framework Express, que nos facilita la creación y manejo del servidor web.
 const express = require('express');
-
-// Importamos el módulo 'cors' para permitir solicitudes de diferentes dominios esto nos servirá para el front 
 const cors = require('cors');
-
-// Importamos el módulo 'path' (nativo de Node.js) para manejar las rutas de las carpetas 
-// de forma segura, sin importar si usamos Windows, Mac o Linux.
 const path = require('path');
-
-// importamos el framework de manejo de sesiones
 const session = require('express-session');
-
-// Importamos dotenv para cargar las variables de entorno desde el archivo .env
 require('dotenv').config();
+require('./src/db/database');
 
-// importamos la configuracion de la BD para que se conecte al arrancar el servidor
-require('./src/db/database.js');
-// ========================================================================
-// 2. INICIALIZACIÓN Y CONFIGURACIÓN BÁSICA
-// ========================================================================
-
-// Ejecutamos Express y guardamos toda su funcionalidad en la variable 'app'. 
-// A partir de ahora, 'app' es nuestro servidor.
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Definimos en qué "canal" (puerto) de nuestra red local va a escuchar el servidor.
-// El 3000 es el estándar más usado para desarrollo.
-const port = 3000;
+// ==========================================
+// 1. MIDDLEWARES GLOBALES & SEGURIDAD
+// ==========================================
+app.use(cors({
+    origin: ['http://localhost:5173', 'https://mi-dashboard.onrender.com']
+})); // Habilita peticiones Cross-Origin (Dashboard React)
+app.use(express.json()); // Parsea payloads JSON
+app.use(express.urlencoded({ extended: false })); // Parsea formularios HTML de EJS
+app.use(express.static(path.join(__dirname, 'public'))); // Servir archivos estáticos
 
-// Habilitamos CORS para permitir solicitudes desde otros dominios
-app.use(cors());
+// ==========================================
+// 2. MOTOR DE PLANTILLAS (EJS - SSR)
+// ==========================================
+app.set('views', path.join(__dirname, 'src', 'views'));
+app.set('view engine', 'ejs');
 
-// ========================================================================
-// 3. CONFIGURACIÓN DEL MOTOR DE VISTAS (RENDERIZADO)
-// ========================================================================
-
-// Le indicamos a Express la ubicación exacta de la carpeta donde guardamos nuestras pantallas.
-// '__dirname' obtiene la ruta actual del proyecto automáticamente.
-app.set("views", path.join(__dirname, "src", "views"));
-
-// Le decimos a Express que el "traductor" que usaremos para convertir nuestro código a HTML es EJS.
-app.set("view engine", "ejs");
-
-// ========================================================================
-// 4. CONFIGURACIÓN DE ARCHIVOS ESTÁTICOS
-// ========================================================================
-
-// Definimos la carpeta 'public' como de acceso público. Esto permite que el navegador 
-// pueda pedir el archivo styles.css o las imágenes de forma directa, sin que tengamos 
-// que programar una ruta especial para cada archivo.
-app.use(express.static(path.join(__dirname, "public")));
-
-// Middleware global para poder leer los datos que viajan en el `body` de un formulario.
-// Es crucial para que `req.body` funcione en tus controladores.
-app.use(express.urlencoded({ extended: false }));
-// Permite a Express entender los JSON que llegan desde el Front End (React)
-app.use(express.json());
-
-// ========================================================================
-// CONFIGURACIÓN DE SESIONES
-// ========================================================================
-
+// ==========================================
+// 3. GESTIÓN DE SESIONES & USUARIO
+// ==========================================
 app.use(session({
-    secret: process.env.secret, //frase secreta para firmar la cookie
-    resave: false, //no guardar la sesión si no ha cambiado
-    saveUninitialized: false, //no guardar una sesión vacía
-    cookie: { secure: false } //en desarrollo, no usamos HTTPS, así que secure es false. En producción, debería ser true.
-
+    secret: process.env.secret || 'secreto_super_seguro_123',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // false en localhost HTTP
 }));
 
 const userSessionMiddleware = require('./src/middlewares/userSessionMiddleware');
 app.use(userSessionMiddleware);
 
-// ========================================================================
-// 5. ENRUTAMIENTO
-// ========================================================================
+// ==========================================
+// 4. ENRUTAMIENTO (API REST & TIENDA WEB)
+// ==========================================
+// API REST (Dashboard React & Clientes)
+app.use('/api', require('./src/routes/api'));
 
-// Importamos las rutas de la API
-const mainApiRoutes = require('./src/routes/api/mainApiRoutes');
-const authApiRoutes = require('./src/routes/api/authApiRoutes');
-const productsApiRoutes = require('./src/routes/api/productsApiRoutes');
-const categoriesApiRoutes = require('./src/routes/api/categoriesApiRoutes');
-const statsApiRoutes = require('./src/routes/api/statsApiRoutes');
-const usersApiRoutes = require('./src/routes/api/usersApiRoutes');
-// Definimos las rutas de la API bajo el prefijo '/api'
-app.use('/api', mainApiRoutes);
-app.use('/api/auth', authApiRoutes);
-app.use('/api/products', productsApiRoutes);
-app.use('/api/categories', categoriesApiRoutes);
-app.use('/api/stats', statsApiRoutes);
-app.use('/api/users', usersApiRoutes);
-// Importamos los archivos de rutas que creamos.
-const mainRoutes = require('./src/routes/mainRoutes');
-const productRoutes = require('./src/routes/productRoutes');
+// Vistas EJS (Tienda E-Commerce)
+app.use('/', require('./src/routes/mainRoutes'));
+app.use('/products', require('./src/routes/productRoutes'));
+app.use('/cart', require('./src/routes/cartRoutes'));
 
-// Le decimos a la app que para cualquier petición que empiece con '/products',
-// debe usar las rutas definidas en `productRoutes`.
-app.use('/products', productRoutes);
-// Le decimos a nuestra aplicación que para cualquier petición que empiece con '/',
-// debe usar las rutas definidas en `mainRoutes`.
-app.use('/', mainRoutes);
-
-// Importamos las rutas del carrito y las usamos para cualquier URL que empiece con '/cart'
-const cartRoutes = require('./src/routes/cartRoutes');
-app.use('/cart', cartRoutes);
-
-// Captura todas las rutas no definidas
+// ==========================================
+// 5. MANEJO DE ERRORES (404 & GLOBAL)
+// ==========================================
+// 404 - Ruta no encontrada
 app.use((req, res, next) => {
-    //se crear el objeto error con la etiqueta 404
-    const error = new Error('No encontrado');
+    const error = new Error('Página no encontrada');
     error.status = 404;
     next(error);
 });
 
-// Manejador de errores
+// Manejador de errores global (4 parámetros: err, req, res, next)
 app.use((err, req, res, next) => {
     const status = err.status || 500;
+    console.error(`[Error ${status}]:`, err.message);
 
-    // 1. Registramos el error completo en la terminal (solo tú lo ves)
-    console.error(`[Error ${status}]:`, err.message, err.stack);
+    // Si la petición proviene de la API REST, respondemos en JSON
+    if (req.originalUrl.startsWith('/api')) {
+        return res.status(status).json({ error: err.message || 'Error interno del servidor' });
+    }
 
-    // 2. Filtramos el mensaje para la vista: si es 500, ocultamos el error real
+    // Si proviene de la tienda web, renderizamos la vista de error EJS
     const message = status >= 500 ? 'Error interno del servidor' : err.message;
-    res.status(status).render('pages/error', { isAuthPage: false, status: status, message: message });
-})
-// 7. Arrancamos el servidor
-app.listen(port, () => {
-    // Esta función se ejecuta una sola vez, justo cuando el servidor arranca con éxito,
-    // para avisarnos por la terminal que todo salió bien.
-    console.log(`Servidor corriendo en el puerto: ${port}`);
+    res.status(status).render('pages/error', { isAuthPage: false, status, message });
+});
+
+// ==========================================
+// 6. INICIALIZACIÓN DEL SERVIDOR
+// ==========================================
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto: ${PORT}`);
 });
