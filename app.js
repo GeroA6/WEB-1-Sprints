@@ -1,3 +1,7 @@
+// =========================================
+// Importacion de dependencias de express
+// =========================================
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -12,7 +16,7 @@ const PORT = process.env.PORT || 3000;
 // 1. MIDDLEWARES GLOBALES & SEGURIDAD
 // ==========================================
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://mi-dashboard.onrender.com']
+    origin: ['http://localhost:5173', 'https://negratone.onrender.com']
 })); // Habilita peticiones Cross-Origin (Dashboard React)
 app.use(express.json()); // Parsea payloads JSON
 app.use(express.urlencoded({ extended: false })); // Parsea formularios HTML de EJS
@@ -28,7 +32,7 @@ app.set('view engine', 'ejs');
 // 3. GESTIÓN DE SESIONES & USUARIO
 // ==========================================
 app.use(session({
-    secret: process.env.secret || 'secreto_super_seguro_123',
+    secret: process.env.secret,
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false } // false en localhost HTTP
