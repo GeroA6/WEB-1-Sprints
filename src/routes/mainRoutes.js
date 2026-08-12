@@ -4,6 +4,9 @@ const router = express.Router(); // Herramienta de Express para manejar rutas fu
 // Importamos el objeto controlador que contiene la lógica.
 const mainController = require('../controllers/mainController');
 
+// Importamos el middleware de autenticación
+const authMiddleware = require('../middlewares/authMiddleware');
+
 // Importamos las herramientas para DEFINIR las reglas de validación.
 const { check, body } = require('express-validator');
 
@@ -11,11 +14,11 @@ const { check, body } = require('express-validator');
 // Para cada ruta, especificamos el método del controlador que debe manejarla.
 router.get('/', mainController.getHome);
 // router.get('/cart', mainController.getCart);
-router.get('/checkout', mainController.getCheckout);
+router.get('/checkout', authMiddleware, mainController.getCheckout);
 router.get('/login', mainController.getLogin);
 //router.get('/product', mainController.getProduct);
 router.get('/products/:id', mainController.getProduct); // Ruta dinámica para productos individuales
-router.get('/profile', mainController.getProfile);
+router.get('/profile', authMiddleware, mainController.getProfile);
 router.get('/register', mainController.getRegister);
 // La ruta real será GET /search?query=...
 router.get('/search', mainController.getSearch);
@@ -25,7 +28,7 @@ router.get('/categories/:category', mainController.getCategory);
 router.get('/logout', mainController.logout);
 
 // --- DEFINICIÓN DE RUTAS POST ---
-router.post('/checkout/pay', mainController.postCheckoutPay);
+router.post('/checkout/pay', authMiddleware, mainController.postCheckoutPay);
 // Esta ruta tiene 3 partes: la URL, un array de middlewares de validación, y el método del controlador.
 router.post('/register', [
     // 1. Middleware de SANITIZACIÓN: Limpia los datos ANTES de validar.
@@ -39,7 +42,7 @@ router.post('/register', [
         .isEmail().withMessage('Debes ingresar un correo electrónico válido.'),
     check('password')
         .isLength({ min: 8 }).withMessage('La contraseña debe tener al menos 8 caracteres.'),
-        // ... (aquí van el resto de tus reglas de contraseña)
+    // ... (aquí van el resto de tus reglas de contraseña)
 
     body('password').custom((value, { req }) => {
         const forbidden = ['password', '1234', 'qwerty', 'negratone', req.body.nombre];
@@ -47,7 +50,7 @@ router.post('/register', [
             throw new Error('La contraseña no puede ser igual a tu email.');
         }
         // ... (aquí van el resto de tus validaciones personalizadas)
-        return true; 
+        return true;
     })
 ], mainController.processRegister); // 3. Si todas las validaciones pasan, se ejecuta este método del controlador.
 

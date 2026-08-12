@@ -6,17 +6,20 @@
     <div class="perfil">
             <div class="perfil-logo">
                 <i class="fa-solid fa-user"></i>
-                <p>Perfil</p>
+                <p><%= locals.user ? locals.user.name : 'Perfil' %></p>
+                <% if (locals.user && locals.user.email) { %>
+                    <small style="color: var(--text-muted); font-size: 0.85rem; display: block; margin-top: 0.25rem;"><%= locals.user.email %></small>
+                <% } %>
             </div>
             <hr class="perfil-hr">
             <div class="perfil-link">
                 <a href="/" class="perfil-a">Inicio</a>
-                <a href="./cart" class="perfil-a">Carrito</a>
+                <a href="/cart" class="perfil-a">Carrito</a>
                 <a href="#" class="perfil-a">Opciones</a>
                 <a href="#" class="perfil-a">Contacto</a>
             </div>
             <hr class="perfil-hr">
-            <a href="./register" class="perfil-a">Cerrar Sesión</a>
+            <a href="/logout" class="perfil-a" style="color: #ef4444;">Cerrar Sesión</a>
         </div>
     </main>
     <%- include('../partials/organisms/footer')%>

@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const cartController = require('../controllers/cartController');
+const authMiddleware = require('../middlewares/authMiddleware');
+
+// Proteger todas las rutas del carrito con el middleware de autenticación
+router.use(authMiddleware);
 
 // La ruta real será GET /cart/
 router.get('/', cartController.viewCart);
