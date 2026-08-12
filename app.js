@@ -16,7 +16,8 @@ const PORT = process.env.PORT || 3000;
 // 1. MIDDLEWARES GLOBALES & SEGURIDAD
 // ==========================================
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://negratone.onrender.com']
+    origin: process.env.CLIENT_URL,
+    credentials: true
 })); // Habilita peticiones Cross-Origin (Dashboard React)
 app.use(express.json()); // Parsea payloads JSON
 app.use(express.urlencoded({ extended: false })); // Parsea formularios HTML de EJS
