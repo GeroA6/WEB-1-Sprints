@@ -2,12 +2,15 @@
 const express = require('express');
 const router = express.Router();
 const productsApiController = require('../../controllers/api/productsApiController');
+const jwtAuthMiddleware = require('../../middlewares/jwtAuthMiddleware');
 
-// Definimos las rutas delegando la responsabilidad de respuesta al controlador API
+// Lectura pública de productos
 router.get('/', productsApiController.getAll);
 router.get('/:id', productsApiController.getById);
-router.post('/', productsApiController.create);
-router.put('/:id', productsApiController.update);
-router.delete('/:id', productsApiController.delete);
+
+// Operaciones protegidas (requieren Token JWT)
+router.post('/', jwtAuthMiddleware, productsApiController.create);
+router.put('/:id', jwtAuthMiddleware, productsApiController.update);
+router.delete('/:id', jwtAuthMiddleware, productsApiController.delete);
 
 module.exports = router;

@@ -82,12 +82,14 @@ app.use(userSessionMiddleware);
 
 // Importamos las rutas de la API
 const mainApiRoutes = require('./src/routes/api/mainApiRoutes');
+const authApiRoutes = require('./src/routes/api/authApiRoutes');
 const productsApiRoutes = require('./src/routes/api/productsApiRoutes');
 const categoriesApiRoutes = require('./src/routes/api/categoriesApiRoutes');
 const statsApiRoutes = require('./src/routes/api/statsApiRoutes');
 const usersApiRoutes = require('./src/routes/api/usersApiRoutes');
 // Definimos las rutas de la API bajo el prefijo '/api'
 app.use('/api', mainApiRoutes);
+app.use('/api/auth', authApiRoutes);
 app.use('/api/products', productsApiRoutes);
 app.use('/api/categories', categoriesApiRoutes);
 app.use('/api/stats', statsApiRoutes);
